@@ -1,0 +1,33 @@
+# ddftemps
+
+## What is ddftemps?
+ddftemps is a platform for creating stunning, interactive digital greeting experiences. Users create personalized birthday cards, anniversary tributes, Valentine's messages, and other special occasion greetings that are delivered as a simple shareable link.
+
+## How it works
+1. Choose a template for the occasion (birthday, anniversary, Valentine's, etc.)
+2. Fill in a form with names, photos, personal messages, relationship milestones
+3. Get a unique link to share with the recipient
+4. The recipient opens the link and experiences a beautiful, animated, multi-page greeting with scroll animations, photo galleries, love letters, and interactive elements
+
+## Key features
+- Interactive Yes/No intro page where the No button shrinks when clicked
+- Animated scroll experience with 9 personalized pages
+- Photo memory gallery in polaroid scrapbook style
+- Personal love letter section
+- Relationship timeline with milestones
+- Works on any device via browser, no app download needed
+- Cards stay live for 30 days
+
+## Available templates
+- For Girlfriend (Birthday) - romantic, warm, blush pink and gold
+- For Boyfriend (Birthday) - coming soon
+- For Best Friend (Birthday) - coming soon
+- For Mom (Birthday) - coming soon
+- Anniversary - coming soon
+- Valentine's Day - coming soon
+
+## Pricing
+Single cards range from $10 to $15 depending on the template.
+
+## Contact
+Website: https://eclectic-kangaroo-adac15.netlify.app/
