@@ -211,6 +211,27 @@ body{font-family:'DM Sans',sans-serif;background:#FAF8F5;color:#1A1A1A;overflow-
 .tmodal-submit:disabled{opacity:.5;cursor:not-allowed}
 .testimonial-empty{text-align:center;padding:40px 24px;color:var(--grey);font-size:15px}
 
+/* === DEMO MODE === */
+.demo-banner{position:fixed;top:0;left:0;right:0;z-index:9999;background:var(--charcoal);color:#fff;text-align:center;padding:10px 16px;font-size:13px;letter-spacing:.5px;animation:slideDown .5s ease}
+@keyframes slideDown{from{transform:translateY(-100%)}to{transform:translateY(0)}}
+.demo-cta-section{background:var(--charcoal);text-align:center;padding:60px 24px;display:none}
+.demo-mode .demo-cta-section{display:block}
+.demo-mode .card-footer{display:none}
+.demo-cta-title{font-family:'DM Serif Display',serif;font-size:28px;color:#fff;margin-bottom:8px}
+.demo-cta-sub{font-size:15px;color:rgba(255,255,255,.6);margin-bottom:28px}
+.demo-cta-btn{display:inline-block;padding:18px 48px;background:var(--gold);color:var(--charcoal);border-radius:60px;font-family:'DM Sans',sans-serif;font-size:16px;font-weight:500;text-decoration:none;transition:all .3s}
+.demo-cta-btn:hover{transform:scale(1.03);box-shadow:0 8px 30px rgba(197,165,90,.3)}
+.demo-cta-note{font-size:12px;color:rgba(255,255,255,.35);margin-top:16px}
+
+/* === TEMPLATE CARD BUTTONS === */
+.template-actions{display:flex;gap:8px;margin-top:12px}
+.template-btn{flex:1;padding:10px;border-radius:60px;font-family:'DM Sans',sans-serif;font-size:12px;cursor:pointer;text-align:center;text-decoration:none;transition:all .3s;letter-spacing:.3px}
+.template-btn-preview{background:transparent;color:var(--charcoal);border:1.5px solid var(--border)}
+.template-btn-preview:hover{border-color:var(--charcoal)}
+.template-btn-create{background:var(--charcoal);color:#fff;border:1.5px solid var(--charcoal)}
+.template-btn-create:hover{background:var(--gold);color:var(--charcoal);border-color:var(--gold)}
+.template-btn-disabled{background:transparent;color:var(--grey);border:1.5px solid var(--border);opacity:.5;cursor:default}
+
 /* === SCROLL REVEAL === */
 .sr{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
 .sr.vis{opacity:1;transform:translateY(0)}
@@ -503,9 +524,11 @@ body{font-family:'DM Sans',sans-serif;background:#FAF8F5;color:#1A1A1A;overflow-
 
     <div class="templates-grid">
       <!-- 1. Birthday -->
-      <div class="template-card sr sr-d1" onclick="location.href='?create=girlfriend-birthday'">
+      <div class="template-card sr sr-d1">
         <div class="template-preview tp-girlfriend"><div class="tp-deco"><div class="tp-deco-emoji">🎂</div><div class="tp-deco-text">Happy Birthday</div></div><span class="template-badge badge-live">Live</span></div>
-        <div class="template-info"><div class="template-name">Birthday</div><div class="template-desc">Warm, emotional, and personal. The perfect birthday surprise.</div><div class="template-meta"><span class="template-occasion">Birthday</span><span class="template-price">$12</span></div></div>
+        <div class="template-info"><div class="template-name">Birthday</div><div class="template-desc">Warm, emotional, and personal. The perfect birthday surprise.</div><div class="template-meta"><span class="template-occasion">Birthday</span><span class="template-price">$12</span></div>
+          <div class="template-actions"><a href="?demo=birthday" class="template-btn template-btn-preview">Preview 👀</a><a href="?create=girlfriend-birthday" class="template-btn template-btn-create">Create ✨</a></div>
+        </div>
       </div>
 
       <!-- 2. Proposal -->
@@ -752,6 +775,14 @@ body{font-family:'DM Sans',sans-serif;background:#FAF8F5;color:#1A1A1A;overflow-
 
   <div class="card-page" id="page-outro"><div class="outro-emoji reveal">🎉</div><div class="outro-heading reveal reveal-delay-1">Now go enjoy YOUR day</div><div class="outro-ps reveal reveal-delay-2" id="v-ps"></div></div>
 
+  <!-- DEMO CTA -->
+  <div class="demo-cta-section">
+    <div class="demo-cta-title">Loved what you just saw?</div>
+    <div class="demo-cta-sub">Create one for your special person in under 5 minutes.</div>
+    <a href="?create=girlfriend-birthday" class="demo-cta-btn">Create Yours for $12 ✨</a>
+    <div class="demo-cta-note">Takes 5 minutes. No design skills needed.</div>
+  </div>
+
   <div class="card-footer"><div style="font-size:13px;opacity:.35;margin-bottom:8px">This experience was made with ❤️</div><div style="font-size:13px;opacity:.5;margin-bottom:4px">Want to create one for your special person?</div><a href="/">ddftemps ✨</a></div>
 </div>
 
@@ -768,6 +799,7 @@ let uploadedFiles=[null,null,null,null,null,null],photoCaptions=['','','','','',
 function init(){
   const p=new URLSearchParams(location.search);
   if(p.get('card')){document.getElementById('landingView').classList.add('hidden');document.getElementById('loadingScreen').classList.remove('hidden');loadCard(p.get('card'))}
+  else if(p.get('demo')){document.getElementById('landingView').classList.add('hidden');loadDemo(p.get('demo'))}
   else if(p.get('create')){document.getElementById('landingView').classList.add('hidden');document.getElementById('createView').classList.add('active');buildPhotoSlots()}
   else{initLanding()}
 }
@@ -841,6 +873,50 @@ function renderCard(c){
   else{wb.style.display='none';document.getElementById('page-wish').querySelector('.wish-content').innerHTML=`<div class="wish-no-photo"><div class="wish-text reveal">Here's to another year of loving you</div><div class="wish-sub reveal reveal-delay-1" style="color:var(--tgold)">Happy Birthday, <span>${c.recipient_name}</span></div></div>`}
   if(document.getElementById('v-recipient-wish'))document.getElementById('v-recipient-wish').textContent=c.recipient_name;
   document.getElementById('v-ps').textContent=c.ps_message||"Your gift is on the way... maybe 👀";
+}
+
+// === DEMO MODE ===
+function loadDemo(type){
+  const demos={
+    'birthday':{
+      sender_name:'James',
+      recipient_name:'Sarah',
+      recipient_age:25,
+      reasons:[
+        'Your smile genuinely fixes my worst days',
+        'The way you laugh at your own jokes before the punchline',
+        'How safe I feel when I am with you',
+        'Your heart is the most beautiful thing about you',
+        'The fact that out of everyone, you chose me'
+      ],
+      love_letter:"I know I don't say it enough, but you are my favourite person in the entire world.\n\nEvery day with you feels like a gift I didn't earn. You make the ordinary feel extraordinary, and you make me want to be better, not because you ask, but because you inspire it just by being you.\n\nHappy birthday, my love. Here's to many more years of us.",
+      milestones:[
+        {date:'June 2023',desc:'The day we met at that coffee shop'},
+        {date:'August 2023',desc:'First time you said I love you'},
+        {date:'December 2023',desc:'Our first trip together'},
+        {date:'Today',desc:'Still falling for you every single day'}
+      ],
+      ps_message:"Your gift is on the way... maybe 👀",
+      photo_urls:[]
+    }
+  };
+  const data=demos[type]||demos['birthday'];
+
+  // Show demo banner
+  const banner=document.createElement('div');
+  banner.className='demo-banner';
+  banner.innerHTML='👀 You are viewing a demo preview';
+  document.body.appendChild(banner);
+
+  // Render card with demo data
+  renderCard(data);
+  createParticles();
+  document.getElementById('cardView').classList.add('active');
+  document.getElementById('cardView').classList.add('demo-mode');
+  initCardScroll();
+
+  // Mark permission page reveals as visible immediately
+  document.querySelectorAll('#page-permission .reveal').forEach(el=>el.classList.add('visible'));
 }
 
 // === PERMISSION LOGIC ===
