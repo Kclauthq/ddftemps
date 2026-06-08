@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://eclectic-kangaroo-adac15.netlify.app/sitemap.xml
