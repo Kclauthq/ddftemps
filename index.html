@@ -106,6 +106,7 @@ body{font-family:'DM Sans',sans-serif;background:#FAF8F5;color:#1A1A1A;overflow-
 .template-badge{position:absolute;top:12px;right:12px;padding:4px 12px;border-radius:60px;font-size:10px;letter-spacing:1px;text-transform:uppercase;font-weight:700;z-index:2}
 .badge-live{background:var(--charcoal);color:#fff}
 .badge-soon{background:rgba(255,255,255,.8);color:var(--grey);backdrop-filter:blur(8px)}
+.badge-offseason{background:rgba(0,0,0,.45);color:rgba(255,255,255,.8);backdrop-filter:blur(8px)}
 .template-info{padding:16px}
 .template-name{font-family:'DM Serif Display',serif;font-size:18px;margin-bottom:4px;color:var(--charcoal)}
 .template-desc{font-size:13px;color:var(--grey);margin-bottom:10px;line-height:1.4}
@@ -115,11 +116,17 @@ body{font-family:'DM Sans',sans-serif;background:#FAF8F5;color:#1A1A1A;overflow-
 
 /* Template preview gradients */
 .tp-girlfriend{background:linear-gradient(135deg,#FFF8F0,#F4C2C2,#D4A853)}
-.tp-boyfriend{background:linear-gradient(135deg,#1a1a2e,#16213e,#0f3460)}
-.tp-bestie{background:linear-gradient(135deg,#ffecd2,#fcb69f,#ff9a9e)}
-.tp-mom{background:linear-gradient(135deg,#f5f0e8,#d4c5a9,#c9b896)}
+.tp-proposal{background:linear-gradient(135deg,#1a1a1a,#2d2d2d,#D4A853)}
 .tp-anniversary{background:linear-gradient(135deg,#2c1810,#8b4513,#D4A853)}
 .tp-valentine{background:linear-gradient(135deg,#ff6b6b,#ee5a24,#c0392b)}
+.tp-mom{background:linear-gradient(135deg,#f5f0e8,#d4c5a9,#c9b896)}
+.tp-dad{background:linear-gradient(135deg,#2c3e50,#34495e,#C5A55A)}
+.tp-bestie{background:linear-gradient(135deg,#ffecd2,#fcb69f,#ff9a9e)}
+.tp-graduation{background:linear-gradient(135deg,#0c1445,#1a237e,#C5A55A)}
+.tp-baby{background:linear-gradient(135deg,#e8f5e9,#b2dfdb,#80cbc4)}
+.tp-apology{background:linear-gradient(135deg,#37474f,#546e7a,#90a4ae)}
+.tp-longdist{background:linear-gradient(135deg,#1a0033,#4a148c,#ce93d8)}
+.tp-wedding{background:linear-gradient(135deg,#fffdf7,#f0e6d3,#D4A853)}
 
 /* Preview decorative elements */
 .tp-deco{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;color:rgba(255,255,255,.7);text-align:center;padding:20px}
@@ -495,82 +502,76 @@ body{font-family:'DM Sans',sans-serif;background:#FAF8F5;color:#1A1A1A;overflow-
     <p class="section-sub sr sr-d2">Every template is a fully animated, interactive experience your person will never forget.</p>
 
     <div class="templates-grid">
-      <!-- Girlfriend Birthday -->
+      <!-- 1. Birthday -->
       <div class="template-card sr sr-d1" onclick="location.href='?create=girlfriend-birthday'">
-        <div class="template-preview tp-girlfriend">
-          <div class="tp-deco"><div class="tp-deco-emoji">💕</div><div class="tp-deco-text">Happy Birthday,<br>My Love</div></div>
-          <span class="template-badge badge-live">Live</span>
-        </div>
-        <div class="template-info">
-          <div class="template-name">For Girlfriend</div>
-          <div class="template-desc">Romantic, warm, and emotional. Blush pink, cream, and gold.</div>
-          <div class="template-meta"><span class="template-occasion">Birthday</span><span class="template-price">$12</span></div>
-        </div>
+        <div class="template-preview tp-girlfriend"><div class="tp-deco"><div class="tp-deco-emoji">🎂</div><div class="tp-deco-text">Happy Birthday</div></div><span class="template-badge badge-live">Live</span></div>
+        <div class="template-info"><div class="template-name">Birthday</div><div class="template-desc">Warm, emotional, and personal. The perfect birthday surprise.</div><div class="template-meta"><span class="template-occasion">Birthday</span><span class="template-price">$12</span></div></div>
       </div>
 
-      <!-- Boyfriend Birthday -->
+      <!-- 2. Proposal -->
       <div class="template-card coming-soon sr sr-d2">
-        <div class="template-preview tp-boyfriend">
-          <div class="tp-deco"><div class="tp-deco-emoji">🖤</div><div class="tp-deco-text">Happy Birthday,<br>King</div></div>
-          <span class="template-badge badge-soon">Coming Soon</span>
-        </div>
-        <div class="template-info">
-          <div class="template-name">For Boyfriend</div>
-          <div class="template-desc">Clean, modern, and bold. Dark tones with gold accents.</div>
-          <div class="template-meta"><span class="template-occasion">Birthday</span><span class="template-price">$12</span></div>
-        </div>
+        <div class="template-preview tp-proposal"><div class="tp-deco"><div class="tp-deco-emoji">💍</div><div class="tp-deco-text">Will You<br>Marry Me?</div></div><span class="template-badge badge-soon">Coming Soon</span></div>
+        <div class="template-info"><div class="template-name">Proposal</div><div class="template-desc">The most dramatic Yes/No moment of their life. Build to the big question.</div><div class="template-meta"><span class="template-occasion">Proposal</span><span class="template-price">$15</span></div></div>
       </div>
 
-      <!-- Best Friend -->
+      <!-- 3. Anniversary -->
       <div class="template-card coming-soon sr sr-d3">
-        <div class="template-preview tp-bestie">
-          <div class="tp-deco"><div class="tp-deco-emoji">✨</div><div class="tp-deco-text">Happy Birthday,<br>Bestie</div></div>
-          <span class="template-badge badge-soon">Coming Soon</span>
-        </div>
-        <div class="template-info">
-          <div class="template-name">For Best Friend</div>
-          <div class="template-desc">Fun, playful, and vibrant. Warm gradients and energy.</div>
-          <div class="template-meta"><span class="template-occasion">Birthday</span><span class="template-price">$10</span></div>
-        </div>
+        <div class="template-preview tp-anniversary"><div class="tp-deco"><div class="tp-deco-emoji">✨</div><div class="tp-deco-text">Happy<br>Anniversary</div></div><span class="template-badge badge-soon">Coming Soon</span></div>
+        <div class="template-info"><div class="template-name">Anniversary</div><div class="template-desc">Celebrate your journey together. Rich, luxurious, and intimate.</div><div class="template-meta"><span class="template-occasion">Anniversary</span><span class="template-price">$14</span></div></div>
       </div>
 
-      <!-- Mom -->
+      <!-- 4. Valentine's Day -->
       <div class="template-card coming-soon sr sr-d1">
-        <div class="template-preview tp-mom">
-          <div class="tp-deco"><div class="tp-deco-emoji">🌸</div><div class="tp-deco-text">Happy Birthday,<br>Mom</div></div>
-          <span class="template-badge badge-soon">Coming Soon</span>
-        </div>
-        <div class="template-info">
-          <div class="template-name">For Mom</div>
-          <div class="template-desc">Elegant, warm, and heartfelt. Soft florals and earth tones.</div>
-          <div class="template-meta"><span class="template-occasion">Birthday</span><span class="template-price">$10</span></div>
-        </div>
+        <div class="template-preview tp-valentine"><div class="tp-deco"><div class="tp-deco-emoji">❤️‍🔥</div><div class="tp-deco-text">Be My<br>Valentine</div></div><span class="template-badge badge-offseason">Off Season</span></div>
+        <div class="template-info"><div class="template-name">Valentine's Day</div><div class="template-desc">Bold, passionate, and fiery. Deep reds and warm tones.</div><div class="template-meta"><span class="template-occasion">Valentine's</span><span class="template-price">$12</span></div></div>
       </div>
 
-      <!-- Anniversary -->
+      <!-- 5. Mother's Day -->
       <div class="template-card coming-soon sr sr-d2">
-        <div class="template-preview tp-anniversary">
-          <div class="tp-deco"><div class="tp-deco-emoji">💍</div><div class="tp-deco-text">Happy<br>Anniversary</div></div>
-          <span class="template-badge badge-soon">Coming Soon</span>
-        </div>
-        <div class="template-info">
-          <div class="template-name">Anniversary</div>
-          <div class="template-desc">Rich, luxurious, and intimate. Deep tones with gold.</div>
-          <div class="template-meta"><span class="template-occasion">Anniversary</span><span class="template-price">$14</span></div>
-        </div>
+        <div class="template-preview tp-mom"><div class="tp-deco"><div class="tp-deco-emoji">🌸</div><div class="tp-deco-text">Happy<br>Mother's Day</div></div><span class="template-badge badge-offseason">Off Season</span></div>
+        <div class="template-info"><div class="template-name">Mother's Day</div><div class="template-desc">Elegant and heartfelt. A tribute to the woman who gave you everything.</div><div class="template-meta"><span class="template-occasion">Mother's Day</span><span class="template-price">$10</span></div></div>
       </div>
 
-      <!-- Valentine -->
+      <!-- 6. Father's Day -->
       <div class="template-card coming-soon sr sr-d3">
-        <div class="template-preview tp-valentine">
-          <div class="tp-deco"><div class="tp-deco-emoji">❤️‍🔥</div><div class="tp-deco-text">Be My<br>Valentine</div></div>
-          <span class="template-badge badge-soon">Coming Soon</span>
-        </div>
-        <div class="template-info">
-          <div class="template-name">Valentine's Day</div>
-          <div class="template-desc">Bold, passionate, and fiery. Deep reds and warm tones.</div>
-          <div class="template-meta"><span class="template-occasion">Valentine's</span><span class="template-price">$12</span></div>
-        </div>
+        <div class="template-preview tp-dad"><div class="tp-deco"><div class="tp-deco-emoji">👔</div><div class="tp-deco-text">Happy<br>Father's Day</div></div><span class="template-badge badge-soon">Coming Soon</span></div>
+        <div class="template-info"><div class="template-name">Father's Day</div><div class="template-desc">Strong, warm, and genuine. Show him what he means to you.</div><div class="template-meta"><span class="template-occasion">Father's Day</span><span class="template-price">$10</span></div></div>
+      </div>
+
+      <!-- 7. Best Friend -->
+      <div class="template-card coming-soon sr sr-d1">
+        <div class="template-preview tp-bestie"><div class="tp-deco"><div class="tp-deco-emoji">🤝</div><div class="tp-deco-text">For My<br>Best Friend</div></div><span class="template-badge badge-soon">Coming Soon</span></div>
+        <div class="template-info"><div class="template-name">Best Friend</div><div class="template-desc">Fun, chaotic, and real. Inside jokes, memories, and all the love.</div><div class="template-meta"><span class="template-occasion">Friendship</span><span class="template-price">$10</span></div></div>
+      </div>
+
+      <!-- 8. Graduation -->
+      <div class="template-card coming-soon sr sr-d2">
+        <div class="template-preview tp-graduation"><div class="tp-deco"><div class="tp-deco-emoji">🎓</div><div class="tp-deco-text">You<br>Did It!</div></div><span class="template-badge badge-soon">Coming Soon</span></div>
+        <div class="template-info"><div class="template-name">Graduation</div><div class="template-desc">Celebrate their achievement. Proud moments, memories, and advice.</div><div class="template-meta"><span class="template-occasion">Graduation</span><span class="template-price">$12</span></div></div>
+      </div>
+
+      <!-- 9. Baby Announcement -->
+      <div class="template-card coming-soon sr sr-d3">
+        <div class="template-preview tp-baby"><div class="tp-deco"><div class="tp-deco-emoji">👶</div><div class="tp-deco-text">We Have<br>News...</div></div><span class="template-badge badge-soon">Coming Soon</span></div>
+        <div class="template-info"><div class="template-name">Baby Announcement</div><div class="template-desc">Share the big news. Name reveal, due date, and all the excitement.</div><div class="template-meta"><span class="template-occasion">Announcement</span><span class="template-price">$12</span></div></div>
+      </div>
+
+      <!-- 10. Apology -->
+      <div class="template-card coming-soon sr sr-d1">
+        <div class="template-preview tp-apology"><div class="tp-deco"><div class="tp-deco-emoji">🕊️</div><div class="tp-deco-text">I'm Sorry</div></div><span class="template-badge badge-soon">Coming Soon</span></div>
+        <div class="template-info"><div class="template-name">Apology</div><div class="template-desc">Honest, vulnerable, and real. Say what needs to be said.</div><div class="template-meta"><span class="template-occasion">Apology</span><span class="template-price">$10</span></div></div>
+      </div>
+
+      <!-- 11. Long Distance -->
+      <div class="template-card coming-soon sr sr-d2">
+        <div class="template-preview tp-longdist"><div class="tp-deco"><div class="tp-deco-emoji">🌍</div><div class="tp-deco-text">Missing<br>You</div></div><span class="template-badge badge-soon">Coming Soon</span></div>
+        <div class="template-info"><div class="template-name">Long Distance</div><div class="template-desc">Close the gap. Countdown, memories, and promises of togetherness.</div><div class="template-meta"><span class="template-occasion">Long Distance</span><span class="template-price">$12</span></div></div>
+      </div>
+
+      <!-- 12. Wedding Congratulations -->
+      <div class="template-card coming-soon sr sr-d3">
+        <div class="template-preview tp-wedding"><div class="tp-deco"><div class="tp-deco-emoji">💒</div><div class="tp-deco-text">Congrats To<br>The Couple</div></div><span class="template-badge badge-soon">Coming Soon</span></div>
+        <div class="template-info"><div class="template-name">Wedding Congrats</div><div class="template-desc">Wishes for the happy couple. Memories, advice, and love.</div><div class="template-meta"><span class="template-occasion">Wedding</span><span class="template-price">$12</span></div></div>
       </div>
     </div>
   </div>
