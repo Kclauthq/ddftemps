@@ -213,6 +213,11 @@ body{font-family:'DM Sans',sans-serif;background:#FAF8F5;color:#1A1A1A;overflow-
 
 /* === DEMO MODE === */
 .demo-banner{position:fixed;top:0;left:0;right:0;z-index:9999;background:var(--charcoal);color:#fff;text-align:center;padding:10px 16px;font-size:13px;letter-spacing:.5px;animation:slideDown .5s ease}
+.expiry-banner{position:fixed;bottom:0;left:0;right:0;z-index:9998;background:var(--charcoal);color:#fff;text-align:center;padding:14px 16px;font-size:13px;display:flex;align-items:center;justify-content:center;gap:12px;animation:slideUp .5s ease}
+.expiry-banner-text{opacity:.8}
+.expiry-banner-btn{padding:8px 20px;background:var(--gold);color:var(--charcoal);border:none;border-radius:60px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;cursor:pointer;transition:all .3s;white-space:nowrap}
+.expiry-banner-btn:hover{transform:scale(1.05)}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
 @keyframes slideDown{from{transform:translateY(-100%)}to{transform:translateY(0)}}
 .demo-cta-section{background:var(--charcoal);text-align:center;padding:60px 24px;display:none}
 .demo-mode .demo-cta-section{display:block}
@@ -527,7 +532,7 @@ body{font-family:'DM Sans',sans-serif;background:#FAF8F5;color:#1A1A1A;overflow-
       <div class="template-card sr sr-d1">
         <div class="template-preview tp-girlfriend"><div class="tp-deco"><div class="tp-deco-emoji">🎂</div><div class="tp-deco-text">Happy Birthday</div></div><span class="template-badge badge-live">Live</span></div>
         <div class="template-info"><div class="template-name">Birthday</div><div class="template-desc">Warm, emotional, and personal. The perfect birthday surprise.</div><div class="template-meta"><span class="template-occasion">Birthday</span><span class="template-price">$12</span></div>
-          <div class="template-actions"><a href="?demo=birthday" class="template-btn template-btn-preview">Preview 👀</a><a href="?create=girlfriend-birthday" class="template-btn template-btn-create">Create ✨</a></div>
+          <div class="template-actions"><a href="?demo=birthday" class="template-btn template-btn-preview">Preview 👀</a><button onclick="startCheckout('birthday')" class="template-btn template-btn-create">Create ✨</button></div>
         </div>
       </div>
 
@@ -779,7 +784,7 @@ body{font-family:'DM Sans',sans-serif;background:#FAF8F5;color:#1A1A1A;overflow-
   <div class="demo-cta-section">
     <div class="demo-cta-title">Loved what you just saw?</div>
     <div class="demo-cta-sub">Create one for your special person in under 5 minutes.</div>
-    <a href="?create=girlfriend-birthday" class="demo-cta-btn">Create Yours for $12 ✨</a>
+    <button onclick="startCheckout('birthday')" class="demo-cta-btn">Create Yours for $12 ✨</button>
     <div class="demo-cta-note">Takes 5 minutes. No design skills needed.</div>
   </div>
 
@@ -796,12 +801,58 @@ const sb=window.supabase.createClient(SB_URL,SB_KEY);
 let uploadedFiles=[null,null,null,null,null,null],photoCaptions=['','','','','',''];
 
 // === ROUTING ===
-function init(){
+async function init(){
   const p=new URLSearchParams(location.search);
-  if(p.get('card')){document.getElementById('landingView').classList.add('hidden');document.getElementById('loadingScreen').classList.remove('hidden');loadCard(p.get('card'))}
+  if(p.get('card')){
+    document.getElementById('landingView').classList.add('hidden');
+    document.getElementById('loadingScreen').classList.remove('hidden');
+    const extendSession=p.get('extend');
+    loadCard(p.get('card'),extendSession);
+  }
   else if(p.get('demo')){document.getElementById('landingView').classList.add('hidden');loadDemo(p.get('demo'))}
-  else if(p.get('create')){document.getElementById('landingView').classList.add('hidden');document.getElementById('createView').classList.add('active');buildPhotoSlots()}
+  else if(p.get('create')){
+    const session=p.get('session');
+    if(!session){window.location.href='/';return}
+    // Verify payment
+    document.getElementById('landingView').classList.add('hidden');
+    document.getElementById('loadingScreen').classList.remove('hidden');
+    const{data,error}=await sb.from('payments').select('*').eq('stripe_session_id',session).single();
+    if(error||!data){
+      document.getElementById('loadingScreen').classList.add('hidden');
+      alert('Payment not verified. Please try again or wait a moment and refresh.');
+      window.location.href='/';
+      return;
+    }
+    // Mark payment as used
+    await sb.from('payments').update({used:true}).eq('stripe_session_id',session);
+    document.getElementById('loadingScreen').classList.add('hidden');
+    document.getElementById('createView').classList.add('active');
+    buildPhotoSlots();
+  }
   else{initLanding()}
+}
+
+// === STRIPE CHECKOUT ===
+async function startCheckout(template,cardId){
+  const btn=event?.target;
+  if(btn){btn.disabled=true;btn.textContent='Loading...'}
+  try{
+    const body={template};
+    if(cardId)body.cardId=cardId;
+    const res=await fetch('/.netlify/functions/create-checkout',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(body)
+    });
+    const data=await res.json();
+    if(data.url){window.location.href=data.url}
+    else{alert('Something went wrong. Please try again.');if(btn){btn.disabled=false;btn.textContent='Create ✨'}}
+  }catch(e){console.error(e);alert('Something went wrong. Please try again.');if(btn){btn.disabled=false;btn.textContent='Create ✨'}}
+}
+
+// === KEEP FOREVER UPSELL ===
+async function keepForever(cardId){
+  startCheckout('keep-forever',cardId);
 }
 
 // === LANDING PAGE ===
@@ -843,13 +894,41 @@ function copyResult(){const u=document.getElementById('resultUrl').textContent;n
 function previewResult(){window.open(document.getElementById('resultUrl').textContent,'_blank')}
 
 // === LOAD CARD ===
-async function loadCard(id){
+async function loadCard(id,extendSession){
   try{
     const{data:c,error}=await sb.from('cards').select('*').eq('id',id).single();
     if(error||!c){document.getElementById('loadingScreen').classList.add('hidden');document.getElementById('expiredView').classList.add('active');return}
-    if(new Date(c.expires_at)<new Date()){document.getElementById('loadingScreen').classList.add('hidden');document.getElementById('expiredView').classList.add('active');return}
+
+    // Check expiry
+    const expiresAt=new Date(c.expires_at);
+    const now=new Date();
+    if(expiresAt<now){
+      // Check if they just paid to extend
+      if(extendSession){
+        // Wait a moment for webhook to process, then reload
+        setTimeout(()=>window.location.href=`/?card=${id}`,3000);
+        return;
+      }
+      document.getElementById('loadingScreen').classList.add('hidden');
+      // Show expired with restore option
+      const ev=document.getElementById('expiredView');
+      ev.classList.add('active');
+      ev.innerHTML=`<div class="expired-emoji">🥀</div><div class="expired-title">This experience has expired</div><div class="expired-sub">But you can restore it forever for just $5</div><button onclick="keepForever('${id}')" style="margin-top:16px;padding:14px 36px;background:linear-gradient(135deg,var(--rose),var(--tgold));color:#fff;border:none;border-radius:60px;font-size:15px;cursor:pointer">Restore Forever for $5 ✨</button><a href="/" style="display:block;margin-top:16px;font-size:14px;color:var(--brown);opacity:.5">Or create a new one</a>`;
+      return;
+    }
+
     sb.from('cards').update({view_count:c.view_count+1}).eq('id',c.id).then();
     renderCard(c);createParticles();
+
+    // Show expiry banner if less than 10 days remaining
+    const daysLeft=Math.ceil((expiresAt-now)/(1000*60*60*24));
+    if(daysLeft<=10){
+      const banner=document.createElement('div');
+      banner.className='expiry-banner';
+      banner.innerHTML=`<span class="expiry-banner-text">This card expires in ${daysLeft} day${daysLeft===1?'':'s'}</span><button class="expiry-banner-btn" onclick="keepForever('${id}')">Keep Forever $5</button>`;
+      document.body.appendChild(banner);
+    }
+
     setTimeout(()=>{document.getElementById('loadingScreen').classList.add('hidden');document.getElementById('cardView').classList.add('active');initCardScroll()},1200);
   }catch(e){console.error(e);document.getElementById('loadingScreen').classList.add('hidden');document.getElementById('expiredView').classList.add('active')}
 }
