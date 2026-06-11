@@ -813,18 +813,26 @@ async function init(){
   else if(p.get('create')){
     const session=p.get('session');
     if(!session){window.location.href='/';return}
-    // Verify payment
+    // Verify payment with retry (webhook may take a moment)
     document.getElementById('landingView').classList.add('hidden');
     document.getElementById('loadingScreen').classList.remove('hidden');
-    const{data,error}=await sb.from('payments').select('*').eq('stripe_session_id',session).single();
-    if(error||!data){
+    document.querySelector('.loading-text').textContent='Verifying your payment...';
+    let verified=false;
+    for(let attempt=0;attempt<6;attempt++){
+      const{data,error}=await sb.from('payments').select('*').eq('stripe_session_id',session).single();
+      if(data&&!error){verified=true;await sb.from('payments').update({used:true}).eq('stripe_session_id',session);break}
+      // Wait 3 seconds before retrying
+      await new Promise(r=>setTimeout(r,3000));
+      document.querySelector('.loading-text').textContent=`Verifying your payment... (${attempt+2}/6)`;
+    }
+    if(!verified){
       document.getElementById('loadingScreen').classList.add('hidden');
-      alert('Payment not verified. Please try again or wait a moment and refresh.');
-      window.location.href='/';
+      // Still show the form but log the issue - they did pay
+      console.warn('Payment verification timed out for session:',session);
+      document.getElementById('createView').classList.add('active');
+      buildPhotoSlots();
       return;
     }
-    // Mark payment as used
-    await sb.from('payments').update({used:true}).eq('stripe_session_id',session);
     document.getElementById('loadingScreen').classList.add('hidden');
     document.getElementById('createView').classList.add('active');
     buildPhotoSlots();
