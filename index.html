@@ -285,6 +285,23 @@ body{font-family:'DM Sans',sans-serif;background:#FAF8F5;color:#1A1A1A;overflow-
 .result-copy:hover{background:var(--gold);color:var(--charcoal)}
 .result-preview{width:100%;padding:14px;background:transparent;color:var(--charcoal);border:1.5px solid var(--charcoal);border-radius:60px;font-size:15px;cursor:pointer;font-family:'DM Sans',sans-serif}
 
+/* === CARD THEMES === */
+.theme-partner{--t-bg:#FFF8F0;--t-primary:#8B2252;--t-secondary:#5C4033;--t-accent:#F4C2C2;--t-gold:#D4A853}
+.theme-bestfriend{--t-bg:#FFF5F0;--t-primary:#E8634A;--t-secondary:#5C4033;--t-accent:#FFDAC6;--t-gold:#F4845F}
+.theme-mom{--t-bg:#F5F9F5;--t-primary:#4A7C59;--t-secondary:#3D3D3D;--t-accent:#D4E8D4;--t-gold:#B8A88A}
+.theme-dad{--t-bg:#F0F3F7;--t-primary:#1B3A5C;--t-secondary:#2C2C2C;--t-accent:#C8D6E5;--t-gold:#C5A55A}
+.theme-sibling{--t-bg:#FBF5F0;--t-primary:#C7673B;--t-secondary:#4A3728;--t-accent:#F0D5C4;--t-gold:#D4956B}
+.theme-general{--t-bg:#FAF8F5;--t-primary:#1A1A1A;--t-secondary:#6B6462;--t-accent:#E8E4DF;--t-gold:#C5A55A}
+[class*="theme-"] .card-page{background:var(--t-bg)!important}
+[class*="theme-"] .intro-heading,[class*="theme-"] .confession-text,[class*="theme-"] .timeline-heading,[class*="theme-"] .outro-heading,[class*="theme-"] .perm-question,[class*="theme-"] .gallery-heading,[class*="theme-"] .perm-success-text,[class*="theme-"] .intro-teaser,[class*="theme-"] .wish-no-photo .wish-text{color:var(--t-primary)!important}
+[class*="theme-"] .confession-text em,[class*="theme-"] .reasons-heading,[class*="theme-"] .gallery-sub,[class*="theme-"] .letter-heading,[class*="theme-"] .reason-heart,[class*="theme-"] .timeline-dot,[class*="theme-"] .timeline-date,[class*="theme-"] .perm-name,[class*="theme-"] .intro-name-line .gold,[class*="theme-"] .ornament-diamond,[class*="theme-"] .perm-pretext,[class*="theme-"] .card-footer a,[class*="theme-"] .wish-sub{color:var(--t-gold)!important}
+[class*="theme-"] .ornament-line,[class*="theme-"] .gold-divider{background:linear-gradient(90deg,transparent,var(--t-gold),transparent)!important}
+[class*="theme-"] .timeline-line{background:linear-gradient(180deg,var(--t-gold),transparent)!important}
+[class*="theme-"] .confession-photo{border-color:var(--t-gold)!important}
+[class*="theme-"] .btn-perm-yes{background:linear-gradient(135deg,var(--t-primary),var(--t-gold))!important}
+[class*="theme-"] .perm-heart-dot:nth-child(2){background:var(--t-gold)!important}
+[class*="theme-"] .reason-item{border-bottom-color:var(--t-accent)!important}
+
 /* ============================================
    CARD EXPERIENCE (VIEW MODE)
    ============================================ */
@@ -747,7 +764,18 @@ body{font-family:'DM Sans',sans-serif;background:#FAF8F5;color:#1A1A1A;overflow-
     <div class="form-logo">🎂</div>
     <div class="form-title">Create Your Birthday Card</div>
     <div class="form-subtitle">For Girlfriend: Romantic, warm, and emotional</div>
-    <div class="form-section"><div class="form-section-title">The Basics</div><div class="form-row"><div class="form-group"><label class="form-label">Your name</label><input type="text" class="form-input" id="f-sender" placeholder="e.g. James"></div><div class="form-group"><label class="form-label">Their name</label><input type="text" class="form-input" id="f-recipient" placeholder="e.g. Sarah"></div></div><div class="form-group"><label class="form-label">Age they're turning</label><input type="number" class="form-input" id="f-age" placeholder="e.g. 25" min="1" max="120" style="max-width:160px"></div></div>
+    <div class="form-section"><div class="form-section-title">The Basics</div>
+      <div class="form-group"><label class="form-label">Who is this for?</label>
+        <select class="form-input" id="f-relationship" onchange="onRelChange(this.value)" style="appearance:auto;-webkit-appearance:auto">
+          <option value="partner">My Partner (Girlfriend/Boyfriend/Spouse)</option>
+          <option value="bestfriend">My Best Friend</option>
+          <option value="mom">My Mom</option>
+          <option value="dad">My Dad</option>
+          <option value="sibling">My Sister/Brother</option>
+          <option value="general">Someone Else</option>
+        </select>
+      </div>
+      <div class="form-row"><div class="form-group"><label class="form-label">Your name</label><input type="text" class="form-input" id="f-sender" placeholder="e.g. James"></div><div class="form-group"><label class="form-label">Their name</label><input type="text" class="form-input" id="f-recipient" placeholder="e.g. Sarah"></div></div><div class="form-group"><label class="form-label">Age they're turning</label><input type="number" class="form-input" id="f-age" placeholder="e.g. 25" min="1" max="120" style="max-width:160px"></div></div>
     <div class="form-section"><div class="form-section-title">Reasons You Love Them</div><div class="form-group"><input type="text" class="form-input" id="f-reason-1" placeholder="Reason 1, e.g. Your smile fixes my worst days"></div><div class="form-group"><input type="text" class="form-input" id="f-reason-2" placeholder="Reason 2, e.g. The way you laugh at your own jokes"></div><div class="form-group"><input type="text" class="form-input" id="f-reason-3" placeholder="Reason 3, e.g. How safe I feel with you"></div><div class="form-group"><input type="text" class="form-input" id="f-reason-4" placeholder="Reason 4, e.g. Your heart is beautiful"></div><div class="form-group"><input type="text" class="form-input" id="f-reason-5" placeholder="Reason 5, e.g. The fact that you chose me"></div></div>
     <div class="form-section"><div class="form-section-title">Your Personal Message</div><div class="form-group"><label class="form-label">Write your heart out, this is the love letter section</label><textarea class="form-textarea" id="f-letter" placeholder="Write everything you've been meaning to say..."></textarea></div></div>
     <div class="form-section"><div class="form-section-title">Your Journey Together</div><div class="milestone-entry"><input type="text" class="form-input" id="f-mile-date-1" placeholder="e.g. June 2023"><input type="text" class="form-input" id="f-mile-desc-1" placeholder="The day we met"></div><div class="milestone-entry"><input type="text" class="form-input" id="f-mile-date-2" placeholder="e.g. Aug 2023"><input type="text" class="form-input" id="f-mile-desc-2" placeholder="First 'I love you'"></div><div class="milestone-entry"><input type="text" class="form-input" id="f-mile-date-3" placeholder="e.g. Dec 2023"><input type="text" class="form-input" id="f-mile-desc-3" placeholder="A day I'll never forget"></div><div class="milestone-entry"><input type="text" class="form-input" id="f-mile-date-4" placeholder="e.g. Today"><input type="text" class="form-input" id="f-mile-desc-4" placeholder="Still falling for you"></div></div>
@@ -799,6 +827,140 @@ const SB_URL='https://runnwtrgrakpvnlepcsi.supabase.co';
 const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ1bm53dHJncmFrcHZubGVwY3NpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA4NzcwNDEsImV4cCI6MjA5NjQ1MzA0MX0.ice8utn2vPylF1Pdn1b-DSzXJrJFV9bc6hgD6w-KuH4';
 const sb=window.supabase.createClient(SB_URL,SB_KEY);
 let uploadedFiles=[null,null,null,null,null,null],photoCaptions=['','','','','',''];
+
+// === RELATIONSHIP THEMES ===
+const relThemes={
+  partner:{
+    theme:'theme-partner',
+    confession:'You are the <em>best thing</em> that ever happened to me.',
+    reasonsHeading:'A few reasons I adore you',
+    reasonsSub:'of many, obviously',
+    wishText:"Here's to another year of loving you",
+    wishSub:'Happy Birthday, my love',
+    permRole:'Assistant Birthday Celebrant',
+    galleryHeading:'Some of my favourite',
+    gallerySub:'moments with you',
+    letterHeading:'A Letter For You',
+    outroHeading:'Now go enjoy YOUR day',
+    placeholders:{
+      reasons:['Your smile fixes my worst days','The way you laugh at your own jokes','How safe I feel with you','Your heart is beautiful','The fact that you chose me'],
+      letter:"Write everything you've been meaning to say...",
+      ps:'Your gift is on the way... maybe 👀',
+      miles:[{d:'e.g. June 2023',t:'The day we met'},{d:'e.g. Aug 2023',t:"First 'I love you'"},{d:'e.g. Dec 2023',t:'Our first trip together'},{d:'e.g. Today',t:'Still falling for you'}]
+    }
+  },
+  bestfriend:{
+    theme:'theme-bestfriend',
+    confession:'Life is genuinely <em>better</em> with you in it.',
+    reasonsHeading:"Reasons you're the absolute best",
+    reasonsSub:'and you know it',
+    wishText:"Here's to another year of chaos together",
+    wishSub:'Happy Birthday, bestie',
+    permRole:'Official Birthday Hype Person',
+    galleryHeading:'The memories that',
+    gallerySub:'live in my head rent free',
+    letterHeading:'Real Talk',
+    outroHeading:'Now go enjoy YOUR day',
+    placeholders:{
+      reasons:['You always know how to make me laugh','Our inside jokes that nobody else gets','How you always have my back','The random voice notes at 2am','Nobody matches your energy'],
+      letter:'Write something real... funny, emotional, whatever feels right.',
+      ps:'Drinks on me tonight... maybe 👀',
+      miles:[{d:'e.g. 2019',t:'The day we became friends'},{d:'e.g. 2020',t:'That trip we still talk about'},{d:'e.g. 2023',t:'When you were there for me'},{d:'e.g. Today',t:'Still the best duo'}]
+    }
+  },
+  mom:{
+    theme:'theme-mom',
+    confession:'Everything I am is <em>because of you</em>.',
+    reasonsHeading:"Reasons I'm grateful for you",
+    reasonsSub:'where do I even start',
+    wishText:"Here's to the woman who gave me everything",
+    wishSub:'Happy Birthday, Mom',
+    permRole:'Birthday Celebration Organiser',
+    galleryHeading:'Moments I treasure',
+    gallerySub:'with you always',
+    letterHeading:'Dear Mom',
+    outroHeading:'Enjoy YOUR special day',
+    placeholders:{
+      reasons:['The sacrifices you made that I never saw','How your advice is always right (eventually)','Your cooking that nothing else compares to','The strength you showed me by example','Loving me even when I made it hard'],
+      letter:'Tell her what she means to you... the things you might not say enough.',
+      ps:'Dinner is on me this time 🤍',
+      miles:[{d:'e.g. The beginning',t:'The day you became my mom'},{d:'e.g. Childhood',t:'A memory I will never forget'},{d:'e.g. Growing up',t:'When I realised how strong you are'},{d:'e.g. Today',t:'Still my biggest supporter'}]
+    }
+  },
+  dad:{
+    theme:'theme-dad',
+    confession:"I don't say it enough, but <em>thank you</em>.",
+    reasonsHeading:"Reasons you're my hero",
+    reasonsSub:'always have been',
+    wishText:"Here's to the man who shaped who I am",
+    wishSub:'Happy Birthday, Dad',
+    permRole:'Birthday Celebration Organiser',
+    galleryHeading:'Moments that mean',
+    gallerySub:'everything to me',
+    letterHeading:'Dear Dad',
+    outroHeading:'Enjoy YOUR day, you earned it',
+    placeholders:{
+      reasons:['The life lessons you taught without saying a word','Your quiet strength that held everything together','How you showed up even when it was hard','The jokes only you find funny (but I laugh anyway)','Making me feel safe no matter what'],
+      letter:'Tell him what he means to you... the things men often leave unsaid.',
+      ps:'Next round of golf is on me 💪',
+      miles:[{d:'e.g. The beginning',t:'The day you became my dad'},{d:'e.g. Childhood',t:'The moment I looked up to you most'},{d:'e.g. Growing up',t:'When I understood your sacrifices'},{d:'e.g. Today',t:'Still learning from you'}]
+    }
+  },
+  sibling:{
+    theme:'theme-sibling',
+    confession:'Nobody <em>gets me</em> like you do.',
+    reasonsHeading:"Reasons I'm glad you're my sibling",
+    reasonsSub:'most of the time anyway',
+    wishText:"Here's to another year of being stuck together",
+    wishSub:'Happy Birthday!',
+    permRole:'Sibling Birthday Roast Master',
+    galleryHeading:'Us being us',
+    gallerySub:'the chaos in pictures',
+    letterHeading:'Alright, Listen...',
+    outroHeading:'Now go enjoy YOUR day',
+    placeholders:{
+      reasons:['Covering for me when I needed it','The arguments that made us closer','Your ability to annoy me and make me laugh at the same time','Always being honest even when I didn\'t want to hear it','Being the one person who truly knows me'],
+      letter:'Write something real... roast them a little, then hit them with something genuine.',
+      ps:'Don\'t let this go to your head 😂',
+      miles:[{d:'e.g. Day one',t:'The day you arrived (and ruined my peace)'},{d:'e.g. Childhood',t:'That time we got in trouble together'},{d:'e.g. Growing up',t:'When we actually became friends'},{d:'e.g. Today',t:'Wouldn\'t trade you for anything'}]
+    }
+  },
+  general:{
+    theme:'theme-general',
+    confession:'The world is genuinely <em>better</em> with you in it.',
+    reasonsHeading:"Reasons you're amazing",
+    reasonsSub:'in case you forgot',
+    wishText:"Here's to another year of you being you",
+    wishSub:'Happy Birthday!',
+    permRole:'Official Birthday Celebrant',
+    galleryHeading:'Moments worth',
+    gallerySub:'remembering',
+    letterHeading:'A Message For You',
+    outroHeading:'Now go enjoy YOUR day',
+    placeholders:{
+      reasons:['Your energy lights up every room','How you make people feel valued','The way you show up for the people you love','Your ability to make anyone smile','Being unapologetically yourself'],
+      letter:'Write your personal message here...',
+      ps:'Your gift is on the way... maybe 👀',
+      miles:[{d:'e.g. The start',t:'When our paths first crossed'},{d:'e.g. A key moment',t:'A memory that stands out'},{d:'e.g. Recently',t:'Something that reminded me of you'},{d:'e.g. Today',t:'Celebrating you'}]
+    }
+  }
+};
+
+function onRelChange(val){
+  const t=relThemes[val];if(!t)return;
+  for(let i=1;i<=5;i++){document.getElementById('f-reason-'+i).placeholder='Reason '+i+', e.g. '+t.placeholders.reasons[i-1]}
+  document.getElementById('f-letter').placeholder=t.placeholders.letter;
+  document.getElementById('f-ps').placeholder=t.placeholders.ps;
+  t.placeholders.miles.forEach((m,i)=>{
+    const dateEl=document.getElementById('f-mile-date-'+(i+1));
+    const descEl=document.getElementById('f-mile-desc-'+(i+1));
+    if(dateEl)dateEl.placeholder=m.d;
+    if(descEl)descEl.placeholder=m.t;
+  });
+  // Update form subtitle
+  const names={partner:'For Your Partner',bestfriend:'For Your Best Friend',mom:'For Mom',dad:'For Dad',sibling:'For Your Sibling',general:'For Someone Special'};
+  document.querySelector('.form-subtitle').textContent='Birthday Card: '+names[val];
+}
 
 // === ROUTING ===
 async function init(){
@@ -889,7 +1051,8 @@ async function handleSubmit(){
   try{
     const reasons=[];for(let i=1;i<=5;i++){const v=document.getElementById(`f-reason-${i}`).value.trim();if(v)reasons.push(v)}
     const milestones=[];for(let i=1;i<=4;i++){const d=document.getElementById(`f-mile-date-${i}`).value.trim(),desc=document.getElementById(`f-mile-desc-${i}`).value.trim();if(d&&desc)milestones.push({date:d,desc})}
-    const{data:card,error:cErr}=await sb.from('cards').insert({template_type:'girlfriend',sender_name:sender,recipient_name:recipient,recipient_age:age?parseInt(age):null,reasons,love_letter:document.getElementById('f-letter').value.trim(),milestones,ps_message:document.getElementById('f-ps').value.trim()||"Your gift is on the way... maybe 👀",photo_urls:[]}).select().single();
+    const relType=document.getElementById('f-relationship')?document.getElementById('f-relationship').value:'partner';
+    const{data:card,error:cErr}=await sb.from('cards').insert({template_type:'birthday-'+relType,sender_name:sender,recipient_name:recipient,recipient_age:age?parseInt(age):null,reasons,love_letter:document.getElementById('f-letter').value.trim(),milestones,ps_message:document.getElementById('f-ps').value.trim()||relThemes[relType].placeholders.ps,photo_urls:[]}).select().single();
     if(cErr)throw cErr;
     const photoUrls=[];
     for(let i=0;i<6;i++){if(uploadedFiles[i]){const f=uploadedFiles[i],ext=f.name.split('.').pop(),fp=`${card.id}/photo-${i}.${ext}`;const{error:uErr}=await sb.storage.from('card-photos').upload(fp,f,{upsert:true});if(!uErr){const{data:{publicUrl}}=sb.storage.from('card-photos').getPublicUrl(fp);photoUrls.push({url:publicUrl,caption:photoCaptions[i]||''})}}}
@@ -942,9 +1105,25 @@ async function loadCard(id,extendSession){
 }
 
 function renderCard(c){
+  // Determine relationship type and apply theme
+  const relKey=(c.template_type||'birthday-partner').replace('birthday-','');
+  const t=relThemes[relKey]||relThemes.partner;
+  document.getElementById('cardView').className='card-container active '+t.theme;
+
   document.getElementById('v-sender-perm').textContent=c.sender_name;
   document.getElementById('v-recipient-intro').textContent=c.recipient_name;
   document.getElementById('v-age-intro').textContent=c.recipient_age||'??';
+
+  // Apply theme-specific text
+  document.querySelector('.perm-sub').innerHTML='✨ '+t.permRole+'? ✨';
+  document.querySelector('.confession-text').innerHTML=t.confession;
+  document.querySelector('.reasons-heading').textContent=t.reasonsHeading;
+  document.querySelector('.reasons-sub').textContent=t.reasonsSub;
+  document.querySelector('.gallery-heading').textContent=t.galleryHeading;
+  document.querySelector('.gallery-sub').textContent=t.gallerySub;
+  document.querySelector('.letter-heading').textContent=t.letterHeading;
+  document.querySelector('.outro-heading').textContent=t.outroHeading;
+
   const ph=c.photo_urls||[];
   if(ph.length>0)document.getElementById('confessionPhoto').innerHTML=`<img src="${ph[0].url}">`;
   const rl=document.getElementById('reasonsList');rl.innerHTML='';
@@ -957,15 +1136,16 @@ function renderCard(c){
   (c.milestones||[]).forEach((m,i)=>{const d=document.createElement('div');d.className=`timeline-item reveal reveal-delay-${i+1}`;d.innerHTML=`<div class="timeline-dot"></div><div class="timeline-date">${m.date}</div><div class="timeline-desc">${m.desc}</div>`;tc.appendChild(d)});
   const wb=document.getElementById('wishPhotoBg');
   if(ph.length>1){wb.innerHTML=`<img src="${ph[ph.length-1].url}"><div class="overlay"></div>`}
-  else{wb.style.display='none';document.getElementById('page-wish').querySelector('.wish-content').innerHTML=`<div class="wish-no-photo"><div class="wish-text reveal">Here's to another year of loving you</div><div class="wish-sub reveal reveal-delay-1" style="color:var(--tgold)">Happy Birthday, <span>${c.recipient_name}</span></div></div>`}
+  else{wb.style.display='none';document.getElementById('page-wish').querySelector('.wish-content').innerHTML=`<div class="wish-no-photo"><div class="wish-text reveal">${t.wishText}</div><div class="wish-sub reveal reveal-delay-1">${t.wishSub.replace('my love',c.recipient_name).replace('bestie',c.recipient_name).replace('Mom',c.recipient_name).replace('Dad',c.recipient_name)}, <span>${c.recipient_name}</span></div></div>`}
   if(document.getElementById('v-recipient-wish'))document.getElementById('v-recipient-wish').textContent=c.recipient_name;
-  document.getElementById('v-ps').textContent=c.ps_message||"Your gift is on the way... maybe 👀";
+  document.getElementById('v-ps').textContent=c.ps_message||t.placeholders.ps;
 }
 
 // === DEMO MODE ===
 function loadDemo(type){
   const demos={
     'birthday':{
+      template_type:'birthday-partner',
       sender_name:'James',
       recipient_name:'Sarah',
       recipient_age:25,
@@ -995,10 +1175,9 @@ function loadDemo(type){
   banner.innerHTML='👀 You are viewing a demo preview';
   document.body.appendChild(banner);
 
-  // Render card with demo data
+  // Render card with demo data (renderCard applies theme class)
   renderCard(data);
   createParticles();
-  document.getElementById('cardView').classList.add('active');
   document.getElementById('cardView').classList.add('demo-mode');
   initCardScroll();
 
