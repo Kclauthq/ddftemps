@@ -211,6 +211,22 @@ body{font-family:'DM Sans',sans-serif;background:#FAF8F5;color:#1A1A1A;overflow-
 .tmodal-submit:disabled{opacity:.5;cursor:not-allowed}
 .testimonial-empty{text-align:center;padding:40px 24px;color:var(--grey);font-size:15px}
 
+/* === SCOREBOARD INTRO (Father's Day) === */
+.scoreboard-intro{display:none;flex-direction:column;align-items:center;text-align:center;z-index:2;position:relative}
+.scoreboard-intro.active{display:flex}
+.score-trophy{font-size:48px;margin-bottom:16px}
+.score-label{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--t-gold,#C5A55A);margin-bottom:8px;font-weight:500}
+.score-title{font-family:'DM Serif Display',serif;font-size:32px;color:var(--t-primary,#1B3A5C);margin-bottom:6px}
+.score-stars{font-size:26px;color:var(--t-gold,#C5A55A);letter-spacing:4px;margin-bottom:6px}
+.score-number{font-family:'DM Serif Display',serif;font-size:20px;color:var(--t-primary,#1B3A5C);margin-bottom:4px}
+.score-verdict{font-size:13px;color:var(--t-secondary,#6B6462);margin-bottom:24px;font-style:italic;opacity:.6}
+.score-bar{width:220px;height:8px;background:rgba(27,58,92,.08);border-radius:4px;margin-bottom:6px;overflow:hidden}
+.score-fill{height:100%;width:0;background:linear-gradient(90deg,var(--t-primary,#1B3A5C),var(--t-gold,#C5A55A));border-radius:4px;animation:fillBar 2s ease forwards 1s}
+@keyframes fillBar{to{width:100%}}
+.score-bar-labels{display:flex;justify-content:space-between;width:220px;font-size:10px;color:rgba(27,58,92,.3);margin-bottom:28px}
+.score-btn{padding:16px 44px;background:linear-gradient(135deg,var(--t-primary,#1B3A5C),var(--t-gold,#C5A55A));color:#fff;border:none;border-radius:60px;font-family:'Questrial',sans-serif;font-size:16px;cursor:pointer;box-shadow:0 4px 20px rgba(27,58,92,.2);transition:all .3s}
+.score-btn:hover{transform:scale(1.05)}
+
 /* === THEME PICKER POPUP === */
 .theme-popup{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:2000;align-items:center;justify-content:center;padding:20px}
 .theme-popup.active{display:flex}
@@ -605,9 +621,11 @@ body{font-family:'DM Sans',sans-serif;background:#FAF8F5;color:#1A1A1A;overflow-
       </div>
 
       <!-- 6. Father's Day -->
-      <div class="template-card coming-soon sr sr-d3">
-        <div class="template-preview tp-dad"><div class="tp-deco"><div class="tp-deco-emoji">👔</div><div class="tp-deco-text">Happy<br>Father's Day</div></div><span class="template-badge badge-soon">Coming Soon</span></div>
-        <div class="template-info"><div class="template-name">Father's Day</div><div class="template-desc">Strong, warm, and genuine. Show him what he means to you.</div><div class="template-meta"><span class="template-occasion">Father's Day</span><span class="template-price">$10</span></div></div>
+      <div class="template-card sr sr-d3">
+        <div class="template-preview tp-dad"><div class="tp-deco"><div class="tp-deco-emoji">👔</div><div class="tp-deco-text">Happy<br>Father's Day</div></div><span class="template-badge badge-live">Live</span></div>
+        <div class="template-info"><div class="template-name">Father's Day</div><div class="template-desc">Strong, warm, and genuine. Show him what he means to you.</div><div class="template-meta"><span class="template-occasion">Father's Day</span><span class="template-price">$10</span></div>
+          <div class="template-actions"><a href="?demo=fathers-day" class="template-btn template-btn-preview">Preview 👀</a><button onclick="startCheckout('fathers-day')" class="template-btn template-btn-create">Create ✨</button></div>
+        </div>
       </div>
 
       <!-- 7. Best Friend -->
@@ -858,7 +876,7 @@ body{font-family:'DM Sans',sans-serif;background:#FAF8F5;color:#1A1A1A;overflow-
      CARD EXPERIENCE (VIEW MODE)
      ============================================ -->
 <div class="card-container" id="cardView">
-  <div class="card-page" id="page-permission"><div class="bg-glow-soft" style="top:30%;left:50%;transform:translate(-50%,-50%)"></div><div id="permQuestion"><div class="perm-pretext reveal">Before we begin</div><div class="perm-question reveal reveal-delay-1">Do you grant <span class="perm-name" id="v-sender-perm"></span> permission to be your official</div><div class="perm-sub reveal reveal-delay-2">✨ Assistant Birthday Celebrant? ✨</div><div class="perm-buttons reveal reveal-delay-3"><button class="btn-perm-yes" id="btnYes" onclick="handlePermYes()">Yes, obviously 💕</button><button class="btn-perm-no" id="btnNo" onclick="handlePermNo()">No</button></div><div class="perm-attempt" id="permAttempt"></div><div class="perm-hearts"><div class="perm-heart-dot"></div><div class="perm-heart-dot"></div><div class="perm-heart-dot"></div></div></div><div class="perm-success" id="permSuccess"><div class="perm-success-emoji">🥰</div><div class="perm-success-text">I knew you'd say yes!</div><div class="perm-success-sub">Now let's celebrate you...</div></div></div>
+  <div class="card-page" id="page-permission"><div class="bg-glow-soft" style="top:30%;left:50%;transform:translate(-50%,-50%)"></div><div id="permQuestion"><div class="perm-pretext reveal">Before we begin</div><div class="perm-question reveal reveal-delay-1">Do you grant <span class="perm-name" id="v-sender-perm"></span> permission to be your official</div><div class="perm-sub reveal reveal-delay-2">✨ Assistant Birthday Celebrant? ✨</div><div class="perm-buttons reveal reveal-delay-3"><button class="btn-perm-yes" id="btnYes" onclick="handlePermYes()">Yes, obviously 💕</button><button class="btn-perm-no" id="btnNo" onclick="handlePermNo()">No</button></div><div class="perm-attempt" id="permAttempt"></div><div class="perm-hearts"><div class="perm-heart-dot"></div><div class="perm-heart-dot"></div><div class="perm-heart-dot"></div></div></div><div class="scoreboard-intro" id="scoreboardIntro"><div class="score-trophy reveal">🏅</div><div class="score-label reveal reveal-delay-1">Official Rating</div><div class="score-title reveal reveal-delay-2">DAD SCORE</div><div class="score-stars reveal reveal-delay-2">★★★★★</div><div class="score-number reveal reveal-delay-3">10 / 10</div><div class="score-verdict reveal reveal-delay-3">No appeals. No debate. Final answer.</div><div class="score-bar reveal reveal-delay-4"><div class="score-fill"></div></div><div class="score-bar-labels reveal reveal-delay-4"><span>Other dads</span><span>Your dad</span></div><button class="score-btn reveal reveal-delay-5" onclick="handleScoreboardContinue()">See The Evidence →</button></div><div class="perm-success" id="permSuccess"><div class="perm-success-emoji">🥰</div><div class="perm-success-text">I knew you'd say yes!</div><div class="perm-success-sub">Now let's celebrate you...</div></div></div>
 
   <div class="card-page" id="page-intro"><div class="bg-glow-soft" style="top:20%;left:60%"></div><div class="intro-ornament reveal"><div class="ornament-line"></div><div class="ornament-diamond"></div><div class="ornament-line"></div></div><div class="intro-cake reveal reveal-delay-1">🎂</div><div class="intro-heading reveal reveal-delay-2">It's officially<br>YOUR day</div><div class="intro-name-line reveal reveal-delay-3"><span class="gold" id="v-recipient-intro"></span>, today you turn <span class="gold" id="v-age-intro"></span></div><div class="intro-just reveal reveal-delay-3">and this is just for you</div><div class="gold-divider reveal reveal-delay-4"></div><div class="intro-teaser reveal reveal-delay-4">And I just need you to know...</div><div class="scroll-hint"><div class="scroll-text">Scroll</div><div class="scroll-arrow"></div></div></div>
 
@@ -1061,13 +1079,48 @@ async function init(){
       console.warn('Payment verification timed out for session:',session);
       document.getElementById('createView').classList.add('active');
       buildPhotoSlots();
+      adaptFormForTemplate(p.get('create'));
       return;
     }
     document.getElementById('loadingScreen').classList.add('hidden');
     document.getElementById('createView').classList.add('active');
     buildPhotoSlots();
+    adaptFormForTemplate(p.get('create'));
   }
   else{initLanding()}
+}
+
+// === OCCASION TEMPLATES ===
+const occasionThemes={
+  'fathers-day':{
+    theme:'theme-dad',
+    introType:'scoreboard',
+    introHeading:'Happy Father\'s Day',
+    introNameLine:function(name){return name+', this one\'s for you'},
+    introJust:'Because some things need to be said...',
+    introTeaser:'And I need you to know...',
+    confession:"I don't say it enough, but <em>everything I am</em> is because of you.",
+    reasonsHeading:"Lessons from my old man",
+    reasonsSub:'that I carry with me every day',
+    galleryHeading:'Through the years',
+    gallerySub:'moments I treasure',
+    letterHeading:'Dear Dad',
+    timelineHeading:"Your greatest hits",
+    wishText:"Here's to the man who gave me everything",
+    wishSub:'Happy Father\'s Day',
+    outroHeading:'Now go relax. You earned it.',
+    defaultPs:'The remote is yours today. No arguments. 💪',
+    placeholders:{
+      reasons:['How to stay calm when everything falls apart','That your word is everything','The value of showing up every single day','How to be strong without being loud about it','That real love is in what you do, not what you say'],
+      letter:'Tell him what he means to you... the things that often go unsaid between fathers and their children.',
+      ps:'The remote is yours today. No arguments. 💪',
+      miles:[{d:'The beginning',t:'The day you became my dad'},{d:'Growing up',t:'Teaching me things I still use today'},{d:'Every time',t:'Being at every moment that mattered'},{d:'Today',t:'Still the person I call first'}]
+    }
+  }
+};
+
+function handleScoreboardContinue(){
+  document.getElementById('page-intro').scrollIntoView({behavior:'smooth'});
 }
 
 // === THEME PICKER ===
@@ -1113,6 +1166,44 @@ function initLanding(){
 function toggleMenu(){const l=document.getElementById('navLinks');l.style.display=l.style.display==='flex'?'none':'flex';l.style.flexDirection='column';l.style.position='absolute';l.style.top='60px';l.style.right='24px';l.style.background='#fff';l.style.padding='16px';l.style.borderRadius='12px';l.style.boxShadow='0 8px 30px rgba(0,0,0,.1)'}
 function toggleFaq(btn){btn.parentElement.classList.toggle('open')}
 
+// === FORM ADAPTATION ===
+function adaptFormForTemplate(tmpl){
+  if(occasionThemes[tmpl]){
+    const ot=occasionThemes[tmpl];
+    // Update form title
+    document.querySelector('.form-title').textContent=tmpl==='fathers-day'?"Create Your Father's Day Card":'Create Your Card';
+    document.querySelector('.form-subtitle').textContent=tmpl==='fathers-day'?'Strong, warm, and genuine. The tribute he deserves.':'';
+    // Hide relationship dropdown for occasion templates
+    const relSelect=document.getElementById('f-relationship');
+    if(relSelect)relSelect.closest('.form-group').style.display='none';
+    // Hide age field for non-birthday occasions
+    const ageField=document.getElementById('f-age');
+    if(ageField)ageField.closest('.form-group').style.display='none';
+    // Update recipient label
+    document.querySelector('label[for="f-recipient"]||.form-label').textContent;
+    // Update section titles and placeholders
+    const sections=document.querySelectorAll('.form-section-title');
+    if(sections[1])sections[1].textContent=tmpl==='fathers-day'?'Things He Taught You':'Reasons You Love Them';
+    if(sections[2])sections[2].textContent=tmpl==='fathers-day'?'Your Message To Dad':'Your Personal Message';
+    if(sections[3])sections[3].textContent=tmpl==='fathers-day'?"Dad's Greatest Moments":'Your Journey Together';
+    // Update placeholders
+    const pl=ot.placeholders;
+    for(let i=1;i<=5;i++){const el=document.getElementById('f-reason-'+i);if(el)el.placeholder='Lesson '+i+', e.g. '+pl.reasons[i-1]}
+    document.getElementById('f-letter').placeholder=pl.letter;
+    document.getElementById('f-ps').placeholder=pl.ps;
+    pl.miles.forEach((m,i)=>{
+      const dateEl=document.getElementById('f-mile-date-'+(i+1));
+      const descEl=document.getElementById('f-mile-desc-'+(i+1));
+      if(dateEl)dateEl.placeholder=m.d;
+      if(descEl)descEl.placeholder=m.t;
+    });
+    // Update emoji
+    document.querySelector('.form-logo').textContent=tmpl==='fathers-day'?'👔':'🎂';
+    // Store template type for submission
+    window._currentTemplate=tmpl;
+  }
+}
+
 // === PHOTO SLOTS ===
 function buildPhotoSlots(){
   const g=document.getElementById('photoGrid');g.innerHTML='';
@@ -1130,7 +1221,8 @@ async function handleSubmit(){
     const reasons=[];for(let i=1;i<=5;i++){const v=document.getElementById(`f-reason-${i}`).value.trim();if(v)reasons.push(v)}
     const milestones=[];for(let i=1;i<=4;i++){const d=document.getElementById(`f-mile-date-${i}`).value.trim(),desc=document.getElementById(`f-mile-desc-${i}`).value.trim();if(d&&desc)milestones.push({date:d,desc})}
     const relType=document.getElementById('f-relationship')?document.getElementById('f-relationship').value:'partner';
-    const{data:card,error:cErr}=await sb.from('cards').insert({template_type:'birthday-'+relType,sender_name:sender,recipient_name:recipient,recipient_age:age?parseInt(age):null,reasons,love_letter:document.getElementById('f-letter').value.trim(),milestones,ps_message:document.getElementById('f-ps').value.trim()||relThemes[relType].placeholders.ps,photo_urls:[]}).select().single();
+    const tmplType=window._currentTemplate||('birthday-'+relType);
+    const{data:card,error:cErr}=await sb.from('cards').insert({template_type:tmplType,sender_name:sender,recipient_name:recipient,recipient_age:age?parseInt(age):null,reasons,love_letter:document.getElementById('f-letter').value.trim(),milestones,ps_message:document.getElementById('f-ps').value.trim()||(occasionThemes[tmplType]?occasionThemes[tmplType].defaultPs:relThemes[relType].placeholders.ps),photo_urls:[]}).select().single();
     if(cErr)throw cErr;
     const photoUrls=[];
     for(let i=0;i<6;i++){if(uploadedFiles[i]){const f=uploadedFiles[i],ext=f.name.split('.').pop(),fp=`${card.id}/photo-${i}.${ext}`;const{error:uErr}=await sb.storage.from('card-photos').upload(fp,f,{upsert:true});if(!uErr){const{data:{publicUrl}}=sb.storage.from('card-photos').getPublicUrl(fp);photoUrls.push({url:publicUrl,caption:photoCaptions[i]||''})}}}
@@ -1183,17 +1275,46 @@ async function loadCard(id,extendSession){
 }
 
 function renderCard(c){
-  // Determine relationship type and apply theme
-  const relKey=(c.template_type||'birthday-partner').replace('birthday-','');
-  const t=relThemes[relKey]||relThemes.partner;
-  document.getElementById('cardView').className='card-container active '+t.theme;
+  const tmplType=c.template_type||'birthday-partner';
+  const isOccasion=!!occasionThemes[tmplType];
+  let t;
+
+  if(isOccasion){
+    // Occasion-based template (Father's Day, etc.)
+    const ot=occasionThemes[tmplType];
+    t={theme:ot.theme,confession:ot.confession,reasonsHeading:ot.reasonsHeading,reasonsSub:ot.reasonsSub,galleryHeading:ot.galleryHeading,gallerySub:ot.gallerySub,letterHeading:ot.letterHeading,outroHeading:ot.outroHeading,wishText:ot.wishText,wishSub:ot.wishSub,placeholders:ot.placeholders,permRole:''};
+    document.getElementById('cardView').className='card-container active '+ot.theme;
+
+    // Show scoreboard, hide Yes/No
+    if(ot.introType==='scoreboard'){
+      document.getElementById('permQuestion').style.display='none';
+      document.getElementById('scoreboardIntro').classList.add('active');
+      document.querySelectorAll('#scoreboardIntro .reveal').forEach(el=>el.classList.add('visible'));
+    }
+
+    // Update intro page for occasion
+    document.querySelector('.intro-heading').innerHTML=ot.introHeading;
+    document.querySelector('.intro-name-line').innerHTML='<span class="gold">'+c.recipient_name+'</span>, this one\'s for you';
+    document.querySelector('.intro-just').textContent=ot.introJust;
+    document.querySelector('.intro-teaser').textContent=ot.introTeaser;
+    if(document.querySelector('.intro-cake'))document.querySelector('.intro-cake').textContent=tmplType==='fathers-day'?'👔':'🎂';
+
+    // Timeline heading
+    if(ot.timelineHeading)document.querySelector('.timeline-heading').textContent=ot.timelineHeading;
+  } else {
+    // Birthday relationship-based template
+    const relKey=tmplType.replace('birthday-','');
+    t=relThemes[relKey]||relThemes.partner;
+    document.getElementById('cardView').className='card-container active '+t.theme;
+    document.getElementById('v-age-intro').textContent=c.recipient_age||'??';
+    document.querySelector('.perm-sub').innerHTML='✨ '+t.permRole+'? ✨';
+    document.querySelector('.intro-name-line').innerHTML='<span class="gold" id="v-recipient-intro">'+c.recipient_name+'</span>, today you turn <span class="gold" id="v-age-intro">'+(c.recipient_age||'??')+'</span>';
+  }
 
   document.getElementById('v-sender-perm').textContent=c.sender_name;
-  document.getElementById('v-recipient-intro').textContent=c.recipient_name;
-  document.getElementById('v-age-intro').textContent=c.recipient_age||'??';
+  if(document.getElementById('v-recipient-intro'))document.getElementById('v-recipient-intro').textContent=c.recipient_name;
 
-  // Apply theme-specific text
-  document.querySelector('.perm-sub').innerHTML='✨ '+t.permRole+'? ✨';
+  // Apply shared text
   document.querySelector('.confession-text').innerHTML=t.confession;
   document.querySelector('.reasons-heading').textContent=t.reasonsHeading;
   document.querySelector('.reasons-sub').textContent=t.reasonsSub;
@@ -1214,7 +1335,7 @@ function renderCard(c){
   (c.milestones||[]).forEach((m,i)=>{const d=document.createElement('div');d.className=`timeline-item reveal reveal-delay-${i+1}`;d.innerHTML=`<div class="timeline-dot"></div><div class="timeline-date">${m.date}</div><div class="timeline-desc">${m.desc}</div>`;tc.appendChild(d)});
   const wb=document.getElementById('wishPhotoBg');
   if(ph.length>1){wb.innerHTML=`<img src="${ph[ph.length-1].url}"><div class="overlay"></div>`}
-  else{wb.style.display='none';document.getElementById('page-wish').querySelector('.wish-content').innerHTML=`<div class="wish-no-photo"><div class="wish-text reveal">${t.wishText}</div><div class="wish-sub reveal reveal-delay-1">${t.wishSub.replace('my love',c.recipient_name).replace('bestie',c.recipient_name).replace('Mom',c.recipient_name).replace('Dad',c.recipient_name)}, <span>${c.recipient_name}</span></div></div>`}
+  else{wb.style.display='none';document.getElementById('page-wish').querySelector('.wish-content').innerHTML=`<div class="wish-no-photo"><div class="wish-text reveal">${t.wishText}</div><div class="wish-sub reveal reveal-delay-1">${t.wishSub}, <span>${c.recipient_name}</span></div></div>`}
   if(document.getElementById('v-recipient-wish'))document.getElementById('v-recipient-wish').textContent=c.recipient_name;
   document.getElementById('v-ps').textContent=c.ps_message||t.placeholders.ps;
 }
@@ -1222,28 +1343,43 @@ function renderCard(c){
 // === DEMO MODE ===
 function loadDemo(type){
   const p=new URLSearchParams(location.search);
-  const rel=p.get('rel')||'partner';
-  const t=relThemes[rel]||relThemes.partner;
-  const demoNames={partner:{s:'James',r:'Sarah',a:25},bestfriend:{s:'Aisha',r:'Nina',a:25},mom:{s:'David',r:'Mom',a:52},dad:{s:'Sophie',r:'Dad',a:55},sibling:{s:'Marcus',r:'Jess',a:22},general:{s:'Alex',r:'Jordan',a:30}};
-  const d=demoNames[rel]||demoNames.partner;
-  const data={
-    template_type:'birthday-'+rel,sender_name:d.s,recipient_name:d.r,recipient_age:d.a,
-    reasons:t.placeholders.reasons,
-    love_letter:"This is a demo preview showing how your personal message will appear.\n\nYour actual words will go here, styled beautifully with the "+rel+" theme.\n\nThe recipient will see your heartfelt message right here.",
-    milestones:t.placeholders.miles.map(m=>({date:m.d.replace('e.g. ',''),desc:m.t})),
-    ps_message:t.placeholders.ps,photo_urls:[]
-  };
+  let data,bannerHtml;
+
+  if(type==='fathers-day'){
+    const ot=occasionThemes['fathers-day'];
+    data={
+      template_type:'fathers-day',sender_name:'Sophie',recipient_name:'Dad',recipient_age:null,
+      reasons:ot.placeholders.reasons,
+      love_letter:"This is a demo preview showing how the personal message will appear.\n\nThe actual heartfelt words from your child will go here, styled in the Father's Day navy and gold theme.\n\nDad will see the real message right here.",
+      milestones:ot.placeholders.miles.map(m=>({date:m.d,desc:m.t})),
+      ps_message:ot.defaultPs,photo_urls:[]
+    };
+    bannerHtml='👀 Father\'s Day Demo Preview';
+  } else {
+    const rel=p.get('rel')||'partner';
+    const t=relThemes[rel]||relThemes.partner;
+    const demoNames={partner:{s:'James',r:'Sarah',a:25},bestfriend:{s:'Aisha',r:'Nina',a:25},mom:{s:'David',r:'Mom',a:52},dad:{s:'Sophie',r:'Dad',a:55},sibling:{s:'Marcus',r:'Jess',a:22},general:{s:'Alex',r:'Jordan',a:30}};
+    const d=demoNames[rel]||demoNames.partner;
+    data={
+      template_type:'birthday-'+rel,sender_name:d.s,recipient_name:d.r,recipient_age:d.a,
+      reasons:t.placeholders.reasons,
+      love_letter:"This is a demo preview showing how your personal message will appear.\n\nYour actual words will go here, styled beautifully with the "+rel+" theme.\n\nThe recipient will see your heartfelt message right here.",
+      milestones:t.placeholders.miles.map(m=>({date:m.d.replace('e.g. ',''),desc:m.t})),
+      ps_message:t.placeholders.ps,photo_urls:[]
+    };
+    const rels=[['partner','💕'],['bestfriend','🤝'],['mom','🌸'],['dad','👔'],['sibling','😂'],['general','✨']];
+    bannerHtml='👀 Demo <span style="opacity:.4;margin:0 6px">|</span> ';
+    rels.forEach(r=>{bannerHtml+=`<a href="?demo=birthday&rel=${r[0]}" style="color:${rel===r[0]?'#fff':'rgba(255,255,255,.4)'};text-decoration:none;margin:0 3px;font-size:14px">${r[1]}</a>`});
+  }
+
   const banner=document.createElement('div');
   banner.className='demo-banner';
-  const rels=[['partner','💕'],['bestfriend','🤝'],['mom','🌸'],['dad','👔'],['sibling','😂'],['general','✨']];
-  let links='👀 Demo <span style="opacity:.4;margin:0 6px">|</span> ';
-  rels.forEach(r=>{links+=`<a href="?demo=birthday&rel=${r[0]}" style="color:${rel===r[0]?'#fff':'rgba(255,255,255,.4)'};text-decoration:none;margin:0 3px;font-size:14px">${r[1]}</a>`});
-  banner.innerHTML=links;
+  banner.innerHTML=bannerHtml;
   document.body.appendChild(banner);
   renderCard(data);createParticles();
   document.getElementById('cardView').classList.add('demo-mode');
   initCardScroll();
-  document.querySelectorAll('#page-permission .reveal').forEach(el=>el.classList.add('visible'));
+  if(type!=='fathers-day')document.querySelectorAll('#page-permission .reveal').forEach(el=>el.classList.add('visible'));
 }
 
 // === PERMISSION LOGIC ===
