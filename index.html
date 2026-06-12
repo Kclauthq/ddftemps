@@ -211,6 +211,32 @@ body{font-family:'DM Sans',sans-serif;background:#FAF8F5;color:#1A1A1A;overflow-
 .tmodal-submit:disabled{opacity:.5;cursor:not-allowed}
 .testimonial-empty{text-align:center;padding:40px 24px;color:var(--grey);font-size:15px}
 
+/* === THEME PICKER POPUP === */
+.theme-popup{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:2000;align-items:center;justify-content:center;padding:20px}
+.theme-popup.active{display:flex}
+.theme-popup-card{background:var(--white);border-radius:24px;padding:32px 28px;max-width:400px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.12);position:relative}
+.theme-popup-close{position:absolute;top:14px;right:14px;background:none;border:none;font-size:20px;cursor:pointer;color:var(--grey);width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-popup-close:hover{background:var(--bg)}
+.theme-popup-title{font-family:'DM Serif Display',serif;font-size:22px;color:var(--charcoal);margin-bottom:4px}
+.theme-popup-sub{font-size:13px;color:var(--grey);margin-bottom:24px}
+.theme-options{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.theme-option{border-radius:12px;padding:14px 8px;text-align:center;border:2px solid var(--border);cursor:pointer;transition:all .2s;background:var(--white)}
+.theme-option:hover{border-color:var(--charcoal);transform:translateY(-2px)}
+.theme-option-dot{width:32px;height:32px;border-radius:50%;margin:0 auto 8px;box-shadow:0 2px 8px rgba(0,0,0,.1)}
+.theme-option-name{font-size:12px;font-weight:500;color:var(--charcoal);margin-bottom:2px}
+.theme-option-emoji{font-size:18px;margin-bottom:6px}
+.td-partner{background:linear-gradient(135deg,#F4C2C2,#D4A853)}
+.td-bestfriend{background:linear-gradient(135deg,#FFDAC6,#F4845F)}
+.td-mom{background:linear-gradient(135deg,#D4E8D4,#B8A88A)}
+.td-dad{background:linear-gradient(135deg,#C8D6E5,#C5A55A)}
+.td-sibling{background:linear-gradient(135deg,#F0D5C4,#D4956B)}
+.td-general{background:linear-gradient(135deg,#E8E4DF,#C5A55A)}
+
+/* Template card theme dots */
+.template-dots{display:flex;gap:5px;margin-top:8px;align-items:center}
+.template-dot{width:12px;height:12px;border-radius:50%;box-shadow:0 1px 3px rgba(0,0,0,.1)}
+.template-dots-label{font-size:10px;color:var(--grey);margin-left:4px}
+
 /* === DEMO MODE === */
 .demo-banner{position:fixed;top:0;left:0;right:0;z-index:9999;background:var(--charcoal);color:#fff;text-align:center;padding:10px 16px;font-size:13px;letter-spacing:.5px;animation:slideDown .5s ease}
 .expiry-banner{position:fixed;bottom:0;left:0;right:0;z-index:9998;background:var(--charcoal);color:#fff;text-align:center;padding:14px 16px;font-size:13px;display:flex;align-items:center;justify-content:center;gap:12px;animation:slideUp .5s ease}
@@ -549,7 +575,8 @@ body{font-family:'DM Sans',sans-serif;background:#FAF8F5;color:#1A1A1A;overflow-
       <div class="template-card sr sr-d1">
         <div class="template-preview tp-girlfriend"><div class="tp-deco"><div class="tp-deco-emoji">🎂</div><div class="tp-deco-text">Happy Birthday</div></div><span class="template-badge badge-live">Live</span></div>
         <div class="template-info"><div class="template-name">Birthday</div><div class="template-desc">Warm, emotional, and personal. The perfect birthday surprise.</div><div class="template-meta"><span class="template-occasion">Birthday</span><span class="template-price">$12</span></div>
-          <div class="template-actions"><a href="?demo=birthday" class="template-btn template-btn-preview">Preview 👀</a><button onclick="startCheckout('birthday')" class="template-btn template-btn-create">Create ✨</button></div>
+          <div class="template-dots"><div class="template-dot td-partner"></div><div class="template-dot td-bestfriend"></div><div class="template-dot td-mom"></div><div class="template-dot td-dad"></div><div class="template-dot td-sibling"></div><div class="template-dot td-general"></div><span class="template-dots-label">6 themes</span></div>
+          <div class="template-actions"><button onclick="openThemePicker('preview')" class="template-btn template-btn-preview">Preview 👀</button><button onclick="openThemePicker('create')" class="template-btn template-btn-create">Create ✨</button></div>
         </div>
       </div>
 
@@ -786,6 +813,47 @@ body{font-family:'DM Sans',sans-serif;background:#FAF8F5;color:#1A1A1A;overflow-
   <div class="result-card" id="resultCard"><div class="result-emoji">🎉</div><div class="result-title">Your card is ready!</div><div class="result-sub">Copy the link and send it to your special person</div><div class="result-url" id="resultUrl"></div><button class="result-copy" onclick="copyResult()">Copy Link 📋</button><button class="result-preview" onclick="previewResult()">Preview Your Card 👀</button></div>
 </div>
 
+<!-- THEME PICKER POPUP -->
+<div class="theme-popup" id="themePopup">
+  <div class="theme-popup-card">
+    <button class="theme-popup-close" onclick="closeThemePicker()">✕</button>
+    <div class="theme-popup-title">Who is this for?</div>
+    <div class="theme-popup-sub">Each theme has its own colours, text, and vibe</div>
+    <div class="theme-options">
+      <div class="theme-option" onclick="selectTheme('partner')">
+        <div class="theme-option-emoji">💕</div>
+        <div class="theme-option-dot td-partner"></div>
+        <div class="theme-option-name">Partner</div>
+      </div>
+      <div class="theme-option" onclick="selectTheme('bestfriend')">
+        <div class="theme-option-emoji">🤝</div>
+        <div class="theme-option-dot td-bestfriend"></div>
+        <div class="theme-option-name">Best Friend</div>
+      </div>
+      <div class="theme-option" onclick="selectTheme('mom')">
+        <div class="theme-option-emoji">🌸</div>
+        <div class="theme-option-dot td-mom"></div>
+        <div class="theme-option-name">Mom</div>
+      </div>
+      <div class="theme-option" onclick="selectTheme('dad')">
+        <div class="theme-option-emoji">👔</div>
+        <div class="theme-option-dot td-dad"></div>
+        <div class="theme-option-name">Dad</div>
+      </div>
+      <div class="theme-option" onclick="selectTheme('sibling')">
+        <div class="theme-option-emoji">😂</div>
+        <div class="theme-option-dot td-sibling"></div>
+        <div class="theme-option-name">Sibling</div>
+      </div>
+      <div class="theme-option" onclick="selectTheme('general')">
+        <div class="theme-option-emoji">✨</div>
+        <div class="theme-option-dot td-general"></div>
+        <div class="theme-option-name">Someone Else</div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- ============================================
      CARD EXPERIENCE (VIEW MODE)
      ============================================ -->
@@ -1002,6 +1070,16 @@ async function init(){
   else{initLanding()}
 }
 
+// === THEME PICKER ===
+let themePickerAction='preview';
+function openThemePicker(action){themePickerAction=action;document.getElementById('themePopup').classList.add('active')}
+function closeThemePicker(){document.getElementById('themePopup').classList.remove('active')}
+function selectTheme(rel){
+  closeThemePicker();
+  if(themePickerAction==='preview'){window.location.href='?demo=birthday&rel='+rel}
+  else{startCheckout('birthday')}
+}
+
 // === STRIPE CHECKOUT ===
 async function startCheckout(template,cardId){
   const btn=event?.target;
@@ -1143,45 +1221,28 @@ function renderCard(c){
 
 // === DEMO MODE ===
 function loadDemo(type){
-  const demos={
-    'birthday':{
-      template_type:'birthday-partner',
-      sender_name:'James',
-      recipient_name:'Sarah',
-      recipient_age:25,
-      reasons:[
-        'Your smile genuinely fixes my worst days',
-        'The way you laugh at your own jokes before the punchline',
-        'How safe I feel when I am with you',
-        'Your heart is the most beautiful thing about you',
-        'The fact that out of everyone, you chose me'
-      ],
-      love_letter:"I know I don't say it enough, but you are my favourite person in the entire world.\n\nEvery day with you feels like a gift I didn't earn. You make the ordinary feel extraordinary, and you make me want to be better, not because you ask, but because you inspire it just by being you.\n\nHappy birthday, my love. Here's to many more years of us.",
-      milestones:[
-        {date:'June 2023',desc:'The day we met at that coffee shop'},
-        {date:'August 2023',desc:'First time you said I love you'},
-        {date:'December 2023',desc:'Our first trip together'},
-        {date:'Today',desc:'Still falling for you every single day'}
-      ],
-      ps_message:"Your gift is on the way... maybe 👀",
-      photo_urls:[]
-    }
+  const p=new URLSearchParams(location.search);
+  const rel=p.get('rel')||'partner';
+  const t=relThemes[rel]||relThemes.partner;
+  const demoNames={partner:{s:'James',r:'Sarah',a:25},bestfriend:{s:'Aisha',r:'Nina',a:25},mom:{s:'David',r:'Mom',a:52},dad:{s:'Sophie',r:'Dad',a:55},sibling:{s:'Marcus',r:'Jess',a:22},general:{s:'Alex',r:'Jordan',a:30}};
+  const d=demoNames[rel]||demoNames.partner;
+  const data={
+    template_type:'birthday-'+rel,sender_name:d.s,recipient_name:d.r,recipient_age:d.a,
+    reasons:t.placeholders.reasons,
+    love_letter:"This is a demo preview showing how your personal message will appear.\n\nYour actual words will go here, styled beautifully with the "+rel+" theme.\n\nThe recipient will see your heartfelt message right here.",
+    milestones:t.placeholders.miles.map(m=>({date:m.d.replace('e.g. ',''),desc:m.t})),
+    ps_message:t.placeholders.ps,photo_urls:[]
   };
-  const data=demos[type]||demos['birthday'];
-
-  // Show demo banner
   const banner=document.createElement('div');
   banner.className='demo-banner';
-  banner.innerHTML='👀 You are viewing a demo preview';
+  const rels=[['partner','💕'],['bestfriend','🤝'],['mom','🌸'],['dad','👔'],['sibling','😂'],['general','✨']];
+  let links='👀 Demo <span style="opacity:.4;margin:0 6px">|</span> ';
+  rels.forEach(r=>{links+=`<a href="?demo=birthday&rel=${r[0]}" style="color:${rel===r[0]?'#fff':'rgba(255,255,255,.4)'};text-decoration:none;margin:0 3px;font-size:14px">${r[1]}</a>`});
+  banner.innerHTML=links;
   document.body.appendChild(banner);
-
-  // Render card with demo data (renderCard applies theme class)
-  renderCard(data);
-  createParticles();
+  renderCard(data);createParticles();
   document.getElementById('cardView').classList.add('demo-mode');
   initCardScroll();
-
-  // Mark permission page reveals as visible immediately
   document.querySelectorAll('#page-permission .reveal').forEach(el=>el.classList.add('visible'));
 }
 
