@@ -270,6 +270,28 @@ body{font-family:'DM Sans',sans-serif;background:#FAF8F5;color:#1A1A1A;overflow-
 .demo-cta-btn:hover{transform:scale(1.03);box-shadow:0 8px 30px rgba(197,165,90,.3)}
 .demo-cta-note{font-size:12px;color:rgba(255,255,255,.35);margin-top:16px}
 
+/* === DYNAMIC MEMORIES === */
+.memory-entry{background:var(--bg);border-radius:12px;padding:14px;margin-bottom:10px;position:relative;border:1px solid var(--border)}
+.memory-entry-row{display:grid;grid-template-columns:120px 1fr;gap:10px;margin-bottom:8px}
+.memory-photo-row{display:flex;align-items:center;gap:10px}
+.memory-photo-slot{width:56px;height:56px;border-radius:10px;border:1.5px dashed var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;overflow:hidden;position:relative;flex-shrink:0;background:var(--white);transition:border-color .3s}
+.memory-photo-slot:hover{border-color:var(--gold)}
+.memory-photo-slot.has-photo{border-style:solid;border-color:var(--gold)}
+.memory-photo-slot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:8px}
+.memory-photo-slot input{display:none}
+.memory-photo-label{font-size:11px;color:var(--grey);opacity:.5}
+.memory-photo-icon{font-size:16px;opacity:.3}
+.memory-remove{position:absolute;top:8px;right:8px;width:22px;height:22px;background:rgba(0,0,0,.06);border:none;border-radius:50%;font-size:12px;cursor:pointer;color:var(--grey);display:flex;align-items:center;justify-content:center;transition:background .2s}
+.memory-remove:hover{background:rgba(0,0,0,.12)}
+.memory-count{font-size:12px;color:var(--grey);opacity:.5;text-align:right;margin-top:4px}
+.btn-add-memory{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;padding:12px;background:transparent;border:1.5px dashed var(--border);border-radius:12px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--grey);cursor:pointer;transition:all .3s;margin-top:4px}
+.btn-add-memory:hover{border-color:var(--gold);color:var(--charcoal)}
+.btn-add-memory:disabled{opacity:.3;cursor:not-allowed}
+
+/* Timeline with photos */
+.timeline-photo{width:48px;height:48px;border-radius:8px;overflow:hidden;margin-top:8px;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.timeline-photo img{width:100%;height:100%;object-fit:cover}
+
 /* === TEMPLATE CARD BUTTONS === */
 .template-actions{display:flex;gap:8px;margin-top:12px}
 .template-btn{flex:1;padding:10px;border-radius:60px;font-family:'DM Sans',sans-serif;font-size:12px;cursor:pointer;text-align:center;text-decoration:none;transition:all .3s;letter-spacing:.3px}
@@ -823,7 +845,11 @@ body{font-family:'DM Sans',sans-serif;background:#FAF8F5;color:#1A1A1A;overflow-
       <div class="form-row"><div class="form-group"><label class="form-label">Your name</label><input type="text" class="form-input" id="f-sender" placeholder="e.g. James"></div><div class="form-group"><label class="form-label">Their name</label><input type="text" class="form-input" id="f-recipient" placeholder="e.g. Sarah"></div></div><div class="form-group"><label class="form-label">Age they're turning</label><input type="number" class="form-input" id="f-age" placeholder="e.g. 25" min="1" max="120" style="max-width:160px"></div></div>
     <div class="form-section"><div class="form-section-title">Reasons You Love Them</div><div class="form-group"><input type="text" class="form-input" id="f-reason-1" placeholder="Reason 1, e.g. Your smile fixes my worst days"></div><div class="form-group"><input type="text" class="form-input" id="f-reason-2" placeholder="Reason 2, e.g. The way you laugh at your own jokes"></div><div class="form-group"><input type="text" class="form-input" id="f-reason-3" placeholder="Reason 3, e.g. How safe I feel with you"></div><div class="form-group"><input type="text" class="form-input" id="f-reason-4" placeholder="Reason 4, e.g. Your heart is beautiful"></div><div class="form-group"><input type="text" class="form-input" id="f-reason-5" placeholder="Reason 5, e.g. The fact that you chose me"></div></div>
     <div class="form-section"><div class="form-section-title">Your Personal Message</div><div class="form-group"><label class="form-label">Write your heart out, this is the love letter section</label><textarea class="form-textarea" id="f-letter" placeholder="Write everything you've been meaning to say..."></textarea></div></div>
-    <div class="form-section"><div class="form-section-title">Your Journey Together</div><div class="milestone-entry"><input type="text" class="form-input" id="f-mile-date-1" placeholder="e.g. June 2023"><input type="text" class="form-input" id="f-mile-desc-1" placeholder="The day we met"></div><div class="milestone-entry"><input type="text" class="form-input" id="f-mile-date-2" placeholder="e.g. Aug 2023"><input type="text" class="form-input" id="f-mile-desc-2" placeholder="First 'I love you'"></div><div class="milestone-entry"><input type="text" class="form-input" id="f-mile-date-3" placeholder="e.g. Dec 2023"><input type="text" class="form-input" id="f-mile-desc-3" placeholder="A day I'll never forget"></div><div class="milestone-entry"><input type="text" class="form-input" id="f-mile-date-4" placeholder="e.g. Today"><input type="text" class="form-input" id="f-mile-desc-4" placeholder="Still falling for you"></div></div>
+    <div class="form-section"><div class="form-section-title">Your Journey Together</div>
+      <div id="memoriesContainer"></div>
+      <button type="button" class="btn-add-memory" id="addMemoryBtn" onclick="addMemory()">+ Add Memory</button>
+      <div class="memory-count" id="memoryCount">1 / 8 memories</div>
+    </div>
     <div class="form-section"><div class="form-section-title">Your Photos Together</div><div class="form-label" style="margin-bottom:12px">Upload 1 to 6 photos. At least 1 recommended for the best experience</div><div class="photo-upload-grid" id="photoGrid"></div></div>
     <div class="form-section"><div class="form-section-title">The Playful P.S.</div><div class="form-group"><label class="form-label">A fun closing message</label><input type="text" class="form-input" id="f-ps" placeholder="e.g. Your gift is on the way... maybe 👀"></div></div>
     <button class="form-submit" id="submitBtn" onclick="handleSubmit()">Generate My Card ✨</button>
@@ -1039,13 +1065,8 @@ function onRelChange(val){
   // Update letter and PS
   document.getElementById('f-letter').placeholder=t.placeholders.letter;
   document.getElementById('f-ps').placeholder=t.placeholders.ps;
-  // Update milestones
-  t.placeholders.miles.forEach((m,i)=>{
-    const dateEl=document.getElementById('f-mile-date-'+(i+1));
-    const descEl=document.getElementById('f-mile-desc-'+(i+1));
-    if(dateEl)dateEl.placeholder=m.d;
-    if(descEl)descEl.placeholder=m.t;
-  });
+  // Reinitialize memories with new placeholders
+  initMemories();
   // Update name placeholders
   const recipientNames={partner:'e.g. Sarah',bestfriend:'e.g. Nina',mom:'e.g. Mom',dad:'e.g. Dad',sibling:'e.g. Jess',general:'e.g. Jordan'};
   const senderNames={partner:'e.g. James',bestfriend:'e.g. Aisha',mom:'e.g. David',dad:'e.g. Sophie',sibling:'e.g. Marcus',general:'e.g. Alex'};
@@ -1240,13 +1261,8 @@ function adaptFormForTemplate(tmpl){
     }
     document.getElementById('f-letter').placeholder=pl.letter;
     document.getElementById('f-ps').placeholder=pl.ps;
-    // Update milestone placeholders
-    pl.miles.forEach((m,i)=>{
-      const dateEl=document.getElementById('f-mile-date-'+(i+1));
-      const descEl=document.getElementById('f-mile-desc-'+(i+1));
-      if(dateEl)dateEl.placeholder=m.d;
-      if(descEl)descEl.placeholder=m.t;
-    });
+    // Reinitialize memories with new placeholders
+    initMemories();
     // Update PS label
     const psLabel=document.getElementById('f-ps').previousElementSibling;
     if(psLabel)psLabel.textContent=tmpl==='fathers-day'?'A closing line for dad':'A fun closing message';
@@ -1259,6 +1275,82 @@ function adaptFormForTemplate(tmpl){
 function buildPhotoSlots(){
   const g=document.getElementById('photoGrid');g.innerHTML='';
   for(let i=0;i<6;i++){const d=document.createElement('div');d.innerHTML=`<div class="photo-upload-slot" id="ps-${i}" onclick="document.getElementById('pi-${i}').click()"><div class="photo-upload-icon">📷</div><div class="photo-upload-text">Add</div><input type="file" id="pi-${i}" accept="image/*" onchange="selPhoto(${i},this)"><button class="photo-remove" onclick="event.stopPropagation();rmPhoto(${i})">✕</button></div><input type="text" class="photo-caption-input" placeholder="Caption" onchange="photoCaptions[${i}]=this.value">`;g.appendChild(d)}
+  initMemories();
+}
+
+// === DYNAMIC MEMORIES ===
+let memoryCount=0;
+const maxMemories=8;
+let memoryPhotos={};
+
+function initMemories(){
+  memoryCount=0;
+  memoryPhotos={};
+  document.getElementById('memoriesContainer').innerHTML='';
+  addMemory();
+}
+
+function getMemoryPlaceholders(){
+  const tmpl=window._currentTemplate;
+  if(tmpl&&occasionThemes[tmpl])return occasionThemes[tmpl].placeholders.miles;
+  const rel=document.getElementById('f-relationship')?document.getElementById('f-relationship').value:'partner';
+  return relThemes[rel]?relThemes[rel].placeholders.miles:relThemes.partner.placeholders.miles;
+}
+
+function addMemory(){
+  if(memoryCount>=maxMemories)return;
+  const pl=getMemoryPlaceholders();
+  const idx=memoryCount;
+  const p=pl[idx]||{d:'e.g. A date',t:'What happened'};
+  const container=document.getElementById('memoriesContainer');
+  const entry=document.createElement('div');
+  entry.className='memory-entry';
+  entry.id='memory-'+idx;
+  entry.innerHTML=`
+    ${idx>0?'<button class="memory-remove" onclick="removeMemory('+idx+')">✕</button>':''}
+    <div class="memory-entry-row">
+      <input type="text" class="form-input" id="f-mem-date-${idx}" placeholder="${p.d}">
+      <input type="text" class="form-input" id="f-mem-desc-${idx}" placeholder="${p.t}">
+    </div>
+    <div class="memory-photo-row">
+      <div class="memory-photo-slot" id="mem-ps-${idx}" onclick="document.getElementById('mem-pi-${idx}').click()">
+        <div class="memory-photo-icon">📷</div>
+        <input type="file" id="mem-pi-${idx}" accept="image/*" onchange="selMemPhoto(${idx},this)">
+      </div>
+      <span class="memory-photo-label">Add a photo to this memory (optional)</span>
+    </div>
+  `;
+  container.appendChild(entry);
+  memoryCount++;
+  updateMemoryCount();
+}
+
+function removeMemory(idx){
+  const el=document.getElementById('memory-'+idx);
+  if(el)el.remove();
+  delete memoryPhotos[idx];
+  updateMemoryCount();
+}
+
+function updateMemoryCount(){
+  const remaining=document.querySelectorAll('.memory-entry').length;
+  document.getElementById('memoryCount').textContent=remaining+' / '+maxMemories+' memories';
+  document.getElementById('addMemoryBtn').disabled=remaining>=maxMemories;
+}
+
+function selMemPhoto(idx,input){
+  const file=input.files[0];
+  if(!file)return;
+  if(file.size>5*1024*1024){alert('Photo must be under 5MB');return}
+  memoryPhotos[idx]=file;
+  const slot=document.getElementById('mem-ps-'+idx);
+  const reader=new FileReader();
+  reader.onload=e=>{
+    const old=slot.querySelector('img');if(old)old.remove();
+    const img=document.createElement('img');img.src=e.target.result;
+    slot.appendChild(img);slot.classList.add('has-photo');
+  };
+  reader.readAsDataURL(file);
 }
 function selPhoto(i,inp){const f=inp.files[0];if(!f)return;if(f.size>5*1024*1024){alert('Photo must be under 5MB');return}uploadedFiles[i]=f;const s=document.getElementById(`ps-${i}`),r=new FileReader();r.onload=e=>{const o=s.querySelector('img');if(o)o.remove();const img=document.createElement('img');img.src=e.target.result;s.appendChild(img);s.classList.add('has-photo')};r.readAsDataURL(f)}
 function rmPhoto(i){uploadedFiles[i]=null;const s=document.getElementById(`ps-${i}`),img=s.querySelector('img');if(img)img.remove();s.classList.remove('has-photo');document.getElementById(`pi-${i}`).value=''}
@@ -1270,7 +1362,16 @@ async function handleSubmit(){
   btn.disabled=true;btn.textContent='Creating your card...';
   try{
     const reasons=[];for(let i=1;i<=5;i++){const v=document.getElementById(`f-reason-${i}`).value.trim();if(v)reasons.push(v)}
-    const milestones=[];for(let i=1;i<=4;i++){const d=document.getElementById(`f-mile-date-${i}`).value.trim(),desc=document.getElementById(`f-mile-desc-${i}`).value.trim();if(d&&desc)milestones.push({date:d,desc})}
+    const milestones=[];
+    document.querySelectorAll('.memory-entry').forEach(entry=>{
+      const idx=entry.id.replace('memory-','');
+      const dateEl=document.getElementById('f-mem-date-'+idx);
+      const descEl=document.getElementById('f-mem-desc-'+idx);
+      if(dateEl&&descEl){
+        const d=dateEl.value.trim(),desc=descEl.value.trim();
+        if(d&&desc)milestones.push({date:d,desc,_idx:parseInt(idx)});
+      }
+    });
     const relType=document.getElementById('f-relationship')?document.getElementById('f-relationship').value:'partner';
     const tmplType=window._currentTemplate||('birthday-'+relType);
     const{data:card,error:cErr}=await sb.from('cards').insert({template_type:tmplType,sender_name:sender,recipient_name:recipient,recipient_age:age?parseInt(age):null,reasons,love_letter:document.getElementById('f-letter').value.trim(),milestones,ps_message:document.getElementById('f-ps').value.trim()||(occasionThemes[tmplType]?occasionThemes[tmplType].defaultPs:relThemes[relType].placeholders.ps),photo_urls:[]}).select().single();
@@ -1278,6 +1379,19 @@ async function handleSubmit(){
     const photoUrls=[];
     for(let i=0;i<6;i++){if(uploadedFiles[i]){const f=uploadedFiles[i],ext=f.name.split('.').pop(),fp=`${card.id}/photo-${i}.${ext}`;const{error:uErr}=await sb.storage.from('card-photos').upload(fp,f,{upsert:true});if(!uErr){const{data:{publicUrl}}=sb.storage.from('card-photos').getPublicUrl(fp);photoUrls.push({url:publicUrl,caption:photoCaptions[i]||''})}}}
     if(photoUrls.length>0)await sb.from('cards').update({photo_urls:photoUrls}).eq('id',card.id);
+    // Upload memory photos
+    for(let i=0;i<milestones.length;i++){
+      const m=milestones[i];
+      if(memoryPhotos[m._idx]){
+        const f=memoryPhotos[m._idx];const ext=f.name.split('.').pop();
+        const fp=`${card.id}/memory-${i}.${ext}`;
+        const{error:mErr}=await sb.storage.from('card-photos').upload(fp,f,{upsert:true});
+        if(!mErr){const{data:{publicUrl}}=sb.storage.from('card-photos').getPublicUrl(fp);milestones[i].photo_url=publicUrl}
+      }
+      delete milestones[i]._idx;
+    }
+    // Update milestones with photo URLs
+    await sb.from('cards').update({milestones}).eq('id',card.id);
     const cardUrl=`${location.origin}${location.pathname}?card=${card.id}`;
     document.getElementById('resultUrl').textContent=cardUrl;document.getElementById('resultCard').classList.add('active');document.getElementById('resultCard').scrollIntoView({behavior:'smooth'});btn.textContent='Card Created! 🎉';
   }catch(err){console.error(err);alert('Something went wrong. Please try again.');btn.disabled=false;btn.textContent='Generate My Card ✨'}
@@ -1388,7 +1502,7 @@ function renderCard(c){
   if(!ph.length){gg.style.gridTemplateColumns='1fr 1fr';for(let i=0;i<4;i++)gg.innerHTML+=`<div class="gallery-polaroid"><div class="gallery-photo"><div class="gallery-photo-empty">📷</div></div></div>`};
   document.getElementById('v-letter').textContent=c.love_letter||'No words could ever be enough...';
   const tc=document.getElementById('timelineContainer');tc.querySelectorAll('.timeline-item').forEach(e=>e.remove());
-  (c.milestones||[]).forEach((m,i)=>{const d=document.createElement('div');d.className=`timeline-item reveal reveal-delay-${i+1}`;d.innerHTML=`<div class="timeline-dot"></div><div class="timeline-date">${m.date}</div><div class="timeline-desc">${m.desc}</div>`;tc.appendChild(d)});
+  (c.milestones||[]).forEach((m,i)=>{const d=document.createElement('div');d.className=`timeline-item reveal reveal-delay-${i+1}`;d.innerHTML=`<div class="timeline-dot"></div><div class="timeline-date">${m.date}</div><div class="timeline-desc">${m.desc}</div>${m.photo_url?'<div class="timeline-photo"><img src="'+m.photo_url+'"></div>':''}`;tc.appendChild(d)});
   const wb=document.getElementById('wishPhotoBg');
   if(ph.length>1){wb.innerHTML=`<img src="${ph[ph.length-1].url}"><div class="overlay"></div>`}
   else{wb.style.display='none';document.getElementById('page-wish').querySelector('.wish-content').innerHTML=`<div class="wish-no-photo"><div class="wish-text reveal">${t.wishText}</div><div class="wish-sub reveal reveal-delay-1">${t.wishSub}, <span>${c.recipient_name}</span></div></div>`}
