@@ -596,7 +596,15 @@ body{font-family:'DM Sans',sans-serif;background:#FAF8F5;color:#1A1A1A;overflow-
         </div>
       </div>
 
-      <!-- 2. Proposal -->
+      <!-- 2. Father's Day -->
+      <div class="template-card sr sr-d2">
+        <div class="template-preview tp-dad"><div class="tp-deco"><div class="tp-deco-emoji">👔</div><div class="tp-deco-text">Happy<br>Father's Day</div></div><span class="template-badge badge-live">Live</span></div>
+        <div class="template-info"><div class="template-name">Father's Day</div><div class="template-desc">Strong, warm, and genuine. Show him what he means to you. June 15.</div><div class="template-meta"><span class="template-occasion">Father's Day</span><span class="template-price">$10</span></div>
+          <div class="template-actions"><a href="?demo=fathers-day" class="template-btn template-btn-preview">Preview 👀</a><button onclick="startCheckout('fathers-day')" class="template-btn template-btn-create">Create ✨</button></div>
+        </div>
+      </div>
+
+      <!-- 3. Proposal -->
       <div class="template-card coming-soon sr sr-d2">
         <div class="template-preview tp-proposal"><div class="tp-deco"><div class="tp-deco-emoji">💍</div><div class="tp-deco-text">Will You<br>Marry Me?</div></div><span class="template-badge badge-soon">Coming Soon</span></div>
         <div class="template-info"><div class="template-name">Proposal</div><div class="template-desc">The most dramatic Yes/No moment of their life. Build to the big question.</div><div class="template-meta"><span class="template-occasion">Proposal</span><span class="template-price">$15</span></div></div>
@@ -618,14 +626,6 @@ body{font-family:'DM Sans',sans-serif;background:#FAF8F5;color:#1A1A1A;overflow-
       <div class="template-card coming-soon sr sr-d2">
         <div class="template-preview tp-mom"><div class="tp-deco"><div class="tp-deco-emoji">🌸</div><div class="tp-deco-text">Happy<br>Mother's Day</div></div><span class="template-badge badge-offseason">Off Season</span></div>
         <div class="template-info"><div class="template-name">Mother's Day</div><div class="template-desc">Elegant and heartfelt. A tribute to the woman who gave you everything.</div><div class="template-meta"><span class="template-occasion">Mother's Day</span><span class="template-price">$10</span></div></div>
-      </div>
-
-      <!-- 6. Father's Day -->
-      <div class="template-card sr sr-d3">
-        <div class="template-preview tp-dad"><div class="tp-deco"><div class="tp-deco-emoji">👔</div><div class="tp-deco-text">Happy<br>Father's Day</div></div><span class="template-badge badge-live">Live</span></div>
-        <div class="template-info"><div class="template-name">Father's Day</div><div class="template-desc">Strong, warm, and genuine. Show him what he means to you.</div><div class="template-meta"><span class="template-occasion">Father's Day</span><span class="template-price">$10</span></div>
-          <div class="template-actions"><a href="?demo=fathers-day" class="template-btn template-btn-preview">Preview 👀</a><button onclick="startCheckout('fathers-day')" class="template-btn template-btn-create">Create ✨</button></div>
-        </div>
       </div>
 
       <!-- 7. Best Friend -->
@@ -1060,7 +1060,16 @@ async function init(){
   else if(p.get('demo')){document.getElementById('landingView').classList.add('hidden');loadDemo(p.get('demo'))}
   else if(p.get('create')){
     const session=p.get('session');
-    if(!session){window.location.href='/';return}
+    const adminKey=p.get('key');
+    if(!session&&adminKey!=='Assignment1%'){window.location.href='/';return}
+    if(adminKey==='Assignment1%'){
+      // Admin bypass
+      document.getElementById('landingView').classList.add('hidden');
+      document.getElementById('createView').classList.add('active');
+      buildPhotoSlots();
+      adaptFormForTemplate(p.get('create'));
+      return;
+    }
     // Verify payment with retry (webhook may take a moment)
     document.getElementById('landingView').classList.add('hidden');
     document.getElementById('loadingScreen').classList.remove('hidden');
