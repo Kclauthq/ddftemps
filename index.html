@@ -824,7 +824,7 @@ body{font-family:'DM Sans',sans-serif;background:#FAF8F5;color:#1A1A1A;overflow-
     <div class="form-section"><div class="form-section-title">Reasons You Love Them</div><div class="form-group"><input type="text" class="form-input" id="f-reason-1" placeholder="Reason 1, e.g. Your smile fixes my worst days"></div><div class="form-group"><input type="text" class="form-input" id="f-reason-2" placeholder="Reason 2, e.g. The way you laugh at your own jokes"></div><div class="form-group"><input type="text" class="form-input" id="f-reason-3" placeholder="Reason 3, e.g. How safe I feel with you"></div><div class="form-group"><input type="text" class="form-input" id="f-reason-4" placeholder="Reason 4, e.g. Your heart is beautiful"></div><div class="form-group"><input type="text" class="form-input" id="f-reason-5" placeholder="Reason 5, e.g. The fact that you chose me"></div></div>
     <div class="form-section"><div class="form-section-title">Your Personal Message</div><div class="form-group"><label class="form-label">Write your heart out, this is the love letter section</label><textarea class="form-textarea" id="f-letter" placeholder="Write everything you've been meaning to say..."></textarea></div></div>
     <div class="form-section"><div class="form-section-title">Your Journey Together</div><div class="milestone-entry"><input type="text" class="form-input" id="f-mile-date-1" placeholder="e.g. June 2023"><input type="text" class="form-input" id="f-mile-desc-1" placeholder="The day we met"></div><div class="milestone-entry"><input type="text" class="form-input" id="f-mile-date-2" placeholder="e.g. Aug 2023"><input type="text" class="form-input" id="f-mile-desc-2" placeholder="First 'I love you'"></div><div class="milestone-entry"><input type="text" class="form-input" id="f-mile-date-3" placeholder="e.g. Dec 2023"><input type="text" class="form-input" id="f-mile-desc-3" placeholder="A day I'll never forget"></div><div class="milestone-entry"><input type="text" class="form-input" id="f-mile-date-4" placeholder="e.g. Today"><input type="text" class="form-input" id="f-mile-desc-4" placeholder="Still falling for you"></div></div>
-    <div class="form-section"><div class="form-section-title">Your Photos Together</div><div class="form-label" style="margin-bottom:12px">Upload up to 6 photos</div><div class="photo-upload-grid" id="photoGrid"></div></div>
+    <div class="form-section"><div class="form-section-title">Your Photos Together</div><div class="form-label" style="margin-bottom:12px">Upload 1 to 6 photos. At least 1 recommended for the best experience</div><div class="photo-upload-grid" id="photoGrid"></div></div>
     <div class="form-section"><div class="form-section-title">The Playful P.S.</div><div class="form-group"><label class="form-label">A fun closing message</label><input type="text" class="form-input" id="f-ps" placeholder="e.g. Your gift is on the way... maybe 👀"></div></div>
     <button class="form-submit" id="submitBtn" onclick="handleSubmit()">Generate My Card ✨</button>
   </div>
@@ -1034,15 +1034,43 @@ const relThemes={
 
 function onRelChange(val){
   const t=relThemes[val];if(!t)return;
+  // Update reason placeholders
   for(let i=1;i<=5;i++){document.getElementById('f-reason-'+i).placeholder='Reason '+i+', e.g. '+t.placeholders.reasons[i-1]}
+  // Update letter and PS
   document.getElementById('f-letter').placeholder=t.placeholders.letter;
   document.getElementById('f-ps').placeholder=t.placeholders.ps;
+  // Update milestones
   t.placeholders.miles.forEach((m,i)=>{
     const dateEl=document.getElementById('f-mile-date-'+(i+1));
     const descEl=document.getElementById('f-mile-desc-'+(i+1));
     if(dateEl)dateEl.placeholder=m.d;
     if(descEl)descEl.placeholder=m.t;
   });
+  // Update name placeholders
+  const recipientNames={partner:'e.g. Sarah',bestfriend:'e.g. Nina',mom:'e.g. Mom',dad:'e.g. Dad',sibling:'e.g. Jess',general:'e.g. Jordan'};
+  const senderNames={partner:'e.g. James',bestfriend:'e.g. Aisha',mom:'e.g. David',dad:'e.g. Sophie',sibling:'e.g. Marcus',general:'e.g. Alex'};
+  document.getElementById('f-recipient').placeholder=recipientNames[val]||'e.g. Sarah';
+  document.getElementById('f-sender').placeholder=senderNames[val]||'e.g. James';
+  // Update section titles
+  const sections=document.querySelectorAll('.form-section-title');
+  const sectionTitles={
+    partner:['The Basics','Reasons You Love Them','Your Personal Message','Your Journey Together','Your Photos Together','The Playful P.S.'],
+    bestfriend:['The Basics','Reasons They Are The Best','Your Message To Them','Your Friendship Timeline','Your Photos Together','The Playful P.S.'],
+    mom:['The Basics','Reasons You Are Grateful','Your Message To Mom','Your Favourite Memories','Your Photos Together','The Closing Line'],
+    dad:['The Basics','Reasons He Is Your Hero','Your Message To Dad','Your Favourite Memories','Your Photos Together','The Closing Line'],
+    sibling:['The Basics','Reasons You Are Glad They Exist','Your Message To Them','Your Sibling Timeline','Your Photos Together','The Playful P.S.'],
+    general:['The Basics','Reasons They Are Amazing','Your Personal Message','Your Favourite Moments','Your Photos Together','The Playful P.S.']
+  };
+  const titles=sectionTitles[val]||sectionTitles.partner;
+  titles.forEach((title,i)=>{if(sections[i])sections[i].textContent=title});
+  // Update letter label
+  const letterLabels={partner:'Write your heart out, this is the love letter section',bestfriend:'Write something real, funny, emotional, whatever feels right',mom:'Tell her what she means to you. The things you might not say enough.',dad:'Tell him what he means to you. The things that often go unsaid.',sibling:'Write something real. Roast them a little, then hit them with something genuine.',general:'Write your personal message here'};
+  const letterLabel=document.getElementById('f-letter').previousElementSibling;
+  if(letterLabel)letterLabel.textContent=letterLabels[val]||letterLabels.partner;
+  // Update PS label
+  const psLabels={partner:'A fun closing message',bestfriend:'A fun closing message',mom:'A warm closing line',dad:'A closing line for dad',sibling:'A cheeky closing line',general:'A fun closing message'};
+  const psLabel=document.getElementById('f-ps').previousElementSibling;
+  if(psLabel)psLabel.textContent=psLabels[val]||psLabels.partner;
   // Update form subtitle
   const names={partner:'For Your Partner',bestfriend:'For Your Best Friend',mom:'For Mom',dad:'For Dad',sibling:'For Your Sibling',general:'For Someone Special'};
   document.querySelector('.form-subtitle').textContent='Birthday Card: '+names[val];
@@ -1179,35 +1207,49 @@ function toggleFaq(btn){btn.parentElement.classList.toggle('open')}
 function adaptFormForTemplate(tmpl){
   if(occasionThemes[tmpl]){
     const ot=occasionThemes[tmpl];
-    // Update form title
+    // Update form title and subtitle
     document.querySelector('.form-title').textContent=tmpl==='fathers-day'?"Create Your Father's Day Card":'Create Your Card';
     document.querySelector('.form-subtitle').textContent=tmpl==='fathers-day'?'Strong, warm, and genuine. The tribute he deserves.':'';
-    // Hide relationship dropdown for occasion templates
+    // Update emoji
+    document.querySelector('.form-logo').textContent=tmpl==='fathers-day'?'👔':'🎂';
+    // Hide relationship dropdown
     const relSelect=document.getElementById('f-relationship');
     if(relSelect)relSelect.closest('.form-group').style.display='none';
-    // Hide age field for non-birthday occasions
+    // Hide age field
     const ageField=document.getElementById('f-age');
     if(ageField)ageField.closest('.form-group').style.display='none';
-    // Update recipient label
-    document.querySelector('label[for="f-recipient"]||.form-label').textContent;
-    // Update section titles and placeholders
+    // Update name placeholders
+    document.getElementById('f-sender').placeholder=tmpl==='fathers-day'?'e.g. Sophie':'e.g. James';
+    document.getElementById('f-recipient').placeholder=tmpl==='fathers-day'?'e.g. Dad':'e.g. Sarah';
+    // Update all section titles
     const sections=document.querySelectorAll('.form-section-title');
+    if(sections[0])sections[0].textContent='The Basics';
     if(sections[1])sections[1].textContent=tmpl==='fathers-day'?'Things He Taught You':'Reasons You Love Them';
     if(sections[2])sections[2].textContent=tmpl==='fathers-day'?'Your Message To Dad':'Your Personal Message';
     if(sections[3])sections[3].textContent=tmpl==='fathers-day'?"Dad's Greatest Moments":'Your Journey Together';
-    // Update placeholders
+    if(sections[4])sections[4].textContent='Your Photos Together';
+    if(sections[5])sections[5].textContent=tmpl==='fathers-day'?'The Closing Line':'The Playful P.S.';
+    // Update letter label
+    const letterLabel=document.getElementById('f-letter').previousElementSibling;
+    if(letterLabel)letterLabel.textContent=tmpl==='fathers-day'?'Tell him what he means to you. The things that often go unsaid.':'Write your heart out, this is the love letter section';
+    // Update reason placeholders
     const pl=ot.placeholders;
-    for(let i=1;i<=5;i++){const el=document.getElementById('f-reason-'+i);if(el)el.placeholder='Lesson '+i+', e.g. '+pl.reasons[i-1]}
+    for(let i=1;i<=5;i++){
+      const el=document.getElementById('f-reason-'+i);
+      if(el)el.placeholder=tmpl==='fathers-day'?'Lesson '+i+', e.g. '+pl.reasons[i-1]:'Reason '+i+', e.g. '+pl.reasons[i-1];
+    }
     document.getElementById('f-letter').placeholder=pl.letter;
     document.getElementById('f-ps').placeholder=pl.ps;
+    // Update milestone placeholders
     pl.miles.forEach((m,i)=>{
       const dateEl=document.getElementById('f-mile-date-'+(i+1));
       const descEl=document.getElementById('f-mile-desc-'+(i+1));
       if(dateEl)dateEl.placeholder=m.d;
       if(descEl)descEl.placeholder=m.t;
     });
-    // Update emoji
-    document.querySelector('.form-logo').textContent=tmpl==='fathers-day'?'👔':'🎂';
+    // Update PS label
+    const psLabel=document.getElementById('f-ps').previousElementSibling;
+    if(psLabel)psLabel.textContent=tmpl==='fathers-day'?'A closing line for dad':'A fun closing message';
     // Store template type for submission
     window._currentTemplate=tmpl;
   }
@@ -1337,8 +1379,13 @@ function renderCard(c){
   const rl=document.getElementById('reasonsList');rl.innerHTML='';
   (c.reasons||[]).forEach((r,i)=>{rl.innerHTML+=`<div class="reason-item reveal reveal-delay-${i+1}"><div class="reason-heart">♡</div><div class="reason-text">${r}</div></div>`});
   const gg=document.getElementById('galleryGrid');gg.innerHTML='';
+  // Adapt grid layout to photo count
+  if(ph.length===1)gg.style.gridTemplateColumns='1fr';
+  else if(ph.length===3)gg.style.gridTemplateColumns='1fr 1fr 1fr';
+  else if(ph.length===5)gg.style.gridTemplateColumns='1fr 1fr 1fr';
+  else gg.style.gridTemplateColumns='1fr 1fr';
   ph.forEach(p=>{gg.innerHTML+=`<div class="gallery-polaroid"><div class="gallery-photo"><img src="${p.url}"></div><div class="gallery-caption">${p.caption||''}</div></div>`});
-  if(!ph.length)for(let i=0;i<4;i++)gg.innerHTML+=`<div class="gallery-polaroid"><div class="gallery-photo"><div class="gallery-photo-empty">📷</div></div></div>`;
+  if(!ph.length){gg.style.gridTemplateColumns='1fr 1fr';for(let i=0;i<4;i++)gg.innerHTML+=`<div class="gallery-polaroid"><div class="gallery-photo"><div class="gallery-photo-empty">📷</div></div></div>`};
   document.getElementById('v-letter').textContent=c.love_letter||'No words could ever be enough...';
   const tc=document.getElementById('timelineContainer');tc.querySelectorAll('.timeline-item').forEach(e=>e.remove());
   (c.milestones||[]).forEach((m,i)=>{const d=document.createElement('div');d.className=`timeline-item reveal reveal-delay-${i+1}`;d.innerHTML=`<div class="timeline-dot"></div><div class="timeline-date">${m.date}</div><div class="timeline-desc">${m.desc}</div>`;tc.appendChild(d)});
