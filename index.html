@@ -1504,9 +1504,12 @@ function renderCard(c){
   const tc=document.getElementById('timelineContainer');tc.querySelectorAll('.timeline-item').forEach(e=>e.remove());
   (c.milestones||[]).forEach((m,i)=>{const d=document.createElement('div');d.className=`timeline-item reveal reveal-delay-${i+1}`;d.innerHTML=`<div class="timeline-dot"></div><div class="timeline-date">${m.date}</div><div class="timeline-desc">${m.desc}</div>${m.photo_url?'<div class="timeline-photo"><img src="'+m.photo_url+'"></div>':''}`;tc.appendChild(d)});
   const wb=document.getElementById('wishPhotoBg');
-  if(ph.length>1){wb.innerHTML=`<img src="${ph[ph.length-1].url}"><div class="overlay"></div>`}
-  else{wb.style.display='none';document.getElementById('page-wish').querySelector('.wish-content').innerHTML=`<div class="wish-no-photo"><div class="wish-text reveal">${t.wishText}</div><div class="wish-sub reveal reveal-delay-1">${t.wishSub}, <span>${c.recipient_name}</span></div></div>`}
-  if(document.getElementById('v-recipient-wish'))document.getElementById('v-recipient-wish').textContent=c.recipient_name;
+  const wishContent=document.getElementById('page-wish').querySelector('.wish-content');
+  if(ph.length>1){
+    wb.innerHTML=`<img src="${ph[ph.length-1].url}"><div class="overlay"></div>`;
+    wishContent.innerHTML=`<div class="wish-text reveal">${t.wishText}</div><div class="wish-sub reveal reveal-delay-1">${t.wishSub}, ${c.recipient_name}</div>`;
+  }
+  else{wb.style.display='none';wishContent.innerHTML=`<div class="wish-no-photo"><div class="wish-text reveal">${t.wishText}</div><div class="wish-sub reveal reveal-delay-1">${t.wishSub}, ${c.recipient_name}</div></div>`}
   document.getElementById('v-ps').textContent=c.ps_message||t.placeholders.ps;
 }
 
